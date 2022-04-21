@@ -2,58 +2,28 @@
 
 namespace Draw\Component\Application\Tests;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Doctrine\ORM\Tools\Setup;
 use Draw\Component\Application\Configuration\Entity\Config;
 use Draw\Component\Application\DoctrineConfigurationRegistry;
+use Draw\Component\Tester\DoctrineOrmTrait;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * @covers \Draw\Component\Application\DoctrineConfigurationRegistry
  */
 class DoctrineConfigurationRegistryTest extends TestCase
 {
+    use DoctrineOrmTrait;
+
     private static EntityManagerInterface $entityManager;
 
     public static function setUpBeforeClass(): void
     {
-        $config = Setup::createAnnotationMetadataConfiguration(
-            [dirname((new \ReflectionClass(Config::class))->getFileName())],
-            true,
-            null,
-            null,
-            false
+        static::$entityManager = static::setUpMySqlWithAnnotationDriver(
+            [dirname((new ReflectionClass(Config::class))->getFileName())]
         );
-
-        static::$entityManager = EntityManager::create(
-            [
-                'driver' => 'pdo_mysql',
-                'url' => getenv('DATABASE_URL'),
-            ],
-            $config,
-        );
-
-        $helperSet = ConsoleRunner::createHelperSet(static::$entityManager);
-
-        $console = ConsoleRunner::createApplication($helperSet);
-        $console->setAutoExit(false);
-        $console->setCatchExceptions(false);
-
-        $result = $console->run(
-            new \Symfony\Component\Console\Input\ArrayInput([
-                'command' => 'orm:schema-tool:update',
-                '--force' => null,
-            ]),
-            $output = new \Symfony\Component\Console\Output\BufferedOutput()
-        );
-
-        if (0 !== $result) {
-            var_dump($output->fetch());
-            exit($result);
-        }
 
         static::$entityManager
             ->createQueryBuilder()
