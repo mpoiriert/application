@@ -23,7 +23,7 @@ class Config
      * @ORM\Column(name="id", type="string", length=255)
      *
      * @Assert\NotBlank()
-     * @Assert\Length(min=1, max=255, allowEmptyString=false)
+     * @Assert\Length(min=1, max=255)
      */
     private ?string $id = null;
 
