@@ -33,19 +33,14 @@ class CronDumpToFileCommandTest extends TestCase
         return 'draw:cron:dump-to-file';
     }
 
-    public function getCommandDescription(): string
-    {
-        return 'Dump the cron job configuration to a file compatible with crontab.';
-    }
-
     public function provideTestArgument(): iterable
     {
-        yield ['filePath', InputArgument::REQUIRED, 'The file path where to dump.'];
+        yield ['filePath', InputArgument::REQUIRED];
     }
 
     public function provideTestOption(): iterable
     {
-        yield ['override', null, InputOption::VALUE_NONE, 'If the file is present we override it.'];
+        yield ['override', null, InputOption::VALUE_NONE];
     }
 
     public function testExecuteNewFile(): void

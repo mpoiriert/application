@@ -30,11 +30,6 @@ class UpdateDeployedVersionCommandTest extends TestCase
         return 'draw:application:update-deployed-version';
     }
 
-    public function getCommandDescription(): string
-    {
-        return 'You should run this after every successful application deployment.';
-    }
-
     public function provideTestArgument(): iterable
     {
         return [];
