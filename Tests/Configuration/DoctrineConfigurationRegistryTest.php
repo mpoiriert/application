@@ -1,17 +1,17 @@
 <?php
 
-namespace Draw\Component\Application\Tests;
+namespace Draw\Component\Application\Tests\Configuration;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Draw\Component\Application\Configuration\DoctrineConfigurationRegistry;
 use Draw\Component\Application\Configuration\Entity\Config;
-use Draw\Component\Application\DoctrineConfigurationRegistry;
 use Draw\Component\Tester\DoctrineOrmTrait;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 /**
- * @covers \Draw\Component\Application\DoctrineConfigurationRegistry
+ * @covers \Draw\Component\Application\Configuration\DoctrineConfigurationRegistry
  */
 class DoctrineConfigurationRegistryTest extends TestCase
 {

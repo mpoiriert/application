@@ -1,6 +1,6 @@
 <?php
 
-namespace Draw\Component\Application;
+namespace Draw\Component\Application\Configuration;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\UnitOfWork;
