@@ -1,6 +1,6 @@
 <?php
 
-namespace Draw\Component\Application\Command;
+namespace Draw\Component\Application\Cron\Command;
 
 use Draw\Component\Application\Cron\CronManager;
 use RuntimeException;
