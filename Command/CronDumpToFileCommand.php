@@ -2,7 +2,7 @@
 
 namespace Draw\Component\Application\Command;
 
-use Draw\Component\Application\CronManager;
+use Draw\Component\Application\Cron\CronManager;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

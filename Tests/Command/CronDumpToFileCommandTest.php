@@ -3,7 +3,7 @@
 namespace Draw\Component\Application\Tests\Command;
 
 use Draw\Component\Application\Command\CronDumpToFileCommand;
-use Draw\Component\Application\CronManager;
+use Draw\Component\Application\Cron\CronManager;
 use Draw\Component\Tester\Application\CommandDataTester;
 use Draw\Component\Tester\Application\CommandTestTrait;
 use PHPUnit\Framework\TestCase;

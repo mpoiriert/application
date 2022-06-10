@@ -1,8 +1,6 @@
 <?php
 
-namespace Draw\Component\Application;
-
-use Draw\Component\Application\Cron\Job;
+namespace Draw\Component\Application\Cron;
 
 class CronManager
 {

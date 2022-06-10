@@ -1,13 +1,13 @@
 <?php
 
-namespace Draw\Component\Application\Tests;
+namespace Draw\Component\Application\Tests\Cron;
 
+use Draw\Component\Application\Cron\CronManager;
 use Draw\Component\Application\Cron\Job;
-use Draw\Component\Application\CronManager;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \Draw\Component\Application\CronManager
+ * @covers \Draw\Component\Application\Cron\CronManager
  */
 class CronManagerTest extends TestCase
 {
