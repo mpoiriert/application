@@ -1,15 +1,15 @@
 <?php
 
-namespace Draw\Component\Application\Tests\Listener;
+namespace Draw\Component\Application\Tests\Versioning\Listener;
 
-use Draw\Component\Application\Event\FetchRunningVersionEvent;
-use Draw\Component\Application\Listener\FetchRunningVersionListener;
+use Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent;
+use Draw\Component\Application\Versioning\Listener\FetchRunningVersionListener;
 use Draw\Component\Core\Reflection\ReflectionAccessor;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * @covers \Draw\Component\Application\Listener\FetchRunningVersionListener
+ * @covers \Draw\Component\Application\Versioning\Listener\FetchRunningVersionListener
  */
 class FetchRunningVersionListenerTest extends TestCase
 {
@@ -20,7 +20,7 @@ class FetchRunningVersionListenerTest extends TestCase
     public function setUp(): void
     {
         $this->service = new FetchRunningVersionListener(
-            $this->projectDirectory = realpath(__DIR__.'/../../../..')
+            $this->projectDirectory = realpath(__DIR__.'/../../../../..')
         );
 
         $this->tearDown();

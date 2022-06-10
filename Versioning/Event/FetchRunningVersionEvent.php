@@ -1,6 +1,6 @@
 <?php
 
-namespace Draw\Component\Application\Event;
+namespace Draw\Component\Application\Versioning\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 

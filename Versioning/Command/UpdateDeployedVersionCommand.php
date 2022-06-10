@@ -1,8 +1,8 @@
 <?php
 
-namespace Draw\Component\Application\Command;
+namespace Draw\Component\Application\Versioning\Command;
 
-use Draw\Component\Application\VersionManager;
+use Draw\Component\Application\Versioning\VersionManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

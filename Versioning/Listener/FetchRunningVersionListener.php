@@ -1,8 +1,8 @@
 <?php
 
-namespace Draw\Component\Application\Listener;
+namespace Draw\Component\Application\Versioning\Listener;
 
-use Draw\Component\Application\Event\FetchRunningVersionEvent;
+use Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FetchRunningVersionListener implements EventSubscriberInterface

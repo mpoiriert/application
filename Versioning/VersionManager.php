@@ -1,8 +1,8 @@
 <?php
 
-namespace Draw\Component\Application;
+namespace Draw\Component\Application\Versioning;
 
-use Draw\Component\Application\Event\FetchRunningVersionEvent;
+use Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
 use Draw\Contracts\Application\VersionVerificationInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;

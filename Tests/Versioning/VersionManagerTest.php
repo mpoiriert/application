@@ -1,9 +1,9 @@
 <?php
 
-namespace Draw\Component\Application\Tests;
+namespace Draw\Component\Application\Tests\Versioning;
 
-use Draw\Component\Application\Event\FetchRunningVersionEvent;
-use Draw\Component\Application\VersionManager;
+use Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent;
+use Draw\Component\Application\Versioning\VersionManager;
 use Draw\Component\Core\Reflection\ReflectionAccessor;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
 use Draw\Contracts\Application\VersionVerificationInterface;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @covers \Draw\Component\Application\VersionManager
+ * @covers \Draw\Component\Application\Versioning\VersionManager
  */
 class VersionManagerTest extends TestCase
 {

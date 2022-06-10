@@ -1,16 +1,16 @@
 <?php
 
-namespace Draw\Component\Application\Tests\Command;
+namespace Draw\Component\Application\Tests\Versioning\Command;
 
-use Draw\Component\Application\Command\UpdateDeployedVersionCommand;
-use Draw\Component\Application\VersionManager;
+use Draw\Component\Application\Versioning\Command\UpdateDeployedVersionCommand;
+use Draw\Component\Application\Versioning\VersionManager;
 use Draw\Component\Tester\Application\CommandDataTester;
 use Draw\Component\Tester\Application\CommandTestTrait;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * @covers \Draw\Component\Application\Command\UpdateDeployedVersionCommand
+ * @covers \Draw\Component\Application\Versioning\Command\UpdateDeployedVersionCommand
  */
 class UpdateDeployedVersionCommandTest extends TestCase
 {
