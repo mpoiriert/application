@@ -1,15 +1,15 @@
 <?php
 
-namespace Draw\Component\Application\Tests\Versioning\Listener;
+namespace Draw\Component\Application\Tests\Versioning\EventListener;
 
 use Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent;
-use Draw\Component\Application\Versioning\Listener\FetchRunningVersionListener;
+use Draw\Component\Application\Versioning\EventListener\FetchRunningVersionListener;
 use Draw\Component\Core\Reflection\ReflectionAccessor;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * @covers \Draw\Component\Application\Versioning\Listener\FetchRunningVersionListener
+ * @covers \Draw\Component\Application\Versioning\EventListener\FetchRunningVersionListener
  */
 class FetchRunningVersionListenerTest extends TestCase
 {

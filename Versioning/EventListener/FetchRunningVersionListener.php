@@ -1,6 +1,6 @@
 <?php
 
-namespace Draw\Component\Application\Versioning\Listener;
+namespace Draw\Component\Application\Versioning\EventListener;
 
 use Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
