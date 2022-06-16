@@ -167,6 +167,8 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
     /**
      * @dataProvider provideTestSetGetKeepType
+     *
+     * @param mixed $value
      */
     public function testSetGetKeepType($value): void
     {
