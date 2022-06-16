@@ -3,7 +3,6 @@
 namespace Draw\Component\Application\Cron\Command;
 
 use Draw\Component\Application\Cron\CronManager;
-use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,7 +33,7 @@ class CronDumpToFileCommand extends Command
         $filePath = $input->getArgument('filePath');
 
         if (is_file($filePath) && !$input->getOption('override')) {
-            throw new RuntimeException(sprintf('The file [%s] already exists. Remove the file or use option --override.', $filePath));
+            throw new \RuntimeException(sprintf('The file [%s] already exists. Remove the file or use option --override.', $filePath));
         }
 
         file_put_contents($filePath, $this->cronManager->dumpJobs());

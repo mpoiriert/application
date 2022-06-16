@@ -2,7 +2,6 @@
 
 namespace Draw\Component\Application\Tests\Configuration\Entity;
 
-use DateTimeImmutable;
 use Draw\Component\Application\Configuration\Entity\Config;
 use PHPUnit\Framework\TestCase;
 
@@ -67,14 +66,14 @@ class ConfigTest extends TestCase
     public function testCreatedAtMutator(): void
     {
         static::assertEqualsWithDelta(
-            new DateTimeImmutable(),
+            new \DateTimeImmutable(),
             $this->entity->getCreatedAt(),
             1
         );
 
         static::assertSame(
             $this->entity,
-            $this->entity->setCreatedAt($value = new DateTimeImmutable('+ 5 minutes'))
+            $this->entity->setCreatedAt($value = new \DateTimeImmutable('+ 5 minutes'))
         );
 
         static::assertSame(
@@ -86,7 +85,7 @@ class ConfigTest extends TestCase
     public function testUpdatedAtMutator(): void
     {
         static::assertEqualsWithDelta(
-            new DateTimeImmutable(),
+            new \DateTimeImmutable(),
             $this->entity->getUpdatedAt(),
             1
         );
@@ -98,7 +97,7 @@ class ConfigTest extends TestCase
 
         static::assertSame(
             $this->entity,
-            $this->entity->setUpdatedAt($value = new DateTimeImmutable('+ 5 minutes'))
+            $this->entity->setUpdatedAt($value = new \DateTimeImmutable('+ 5 minutes'))
         );
 
         static::assertSame(
@@ -109,7 +108,7 @@ class ConfigTest extends TestCase
 
     public function testUpdateTimestamps(): void
     {
-        $this->entity->setCreatedAt($value = new DateTimeImmutable('- 5 seconds'));
+        $this->entity->setCreatedAt($value = new \DateTimeImmutable('- 5 seconds'));
         $this->entity->setUpdatedAt($value);
 
         $this->entity->updateTimestamps();

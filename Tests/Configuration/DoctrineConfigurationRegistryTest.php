@@ -8,7 +8,6 @@ use Draw\Component\Application\Configuration\Entity\Config;
 use Draw\Component\Tester\DoctrineOrmTrait;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 /**
  * @covers \Draw\Component\Application\Configuration\DoctrineConfigurationRegistry
@@ -22,7 +21,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         static::$entityManager = static::setUpMySqlWithAnnotationDriver(
-            [\dirname((new ReflectionClass(Config::class))->getFileName())]
+            [\dirname((new \ReflectionClass(Config::class))->getFileName())]
         );
 
         static::$entityManager

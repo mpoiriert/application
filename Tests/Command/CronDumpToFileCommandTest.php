@@ -7,7 +7,6 @@ use Draw\Component\Application\Cron\CronManager;
 use Draw\Component\Tester\Application\CommandDataTester;
 use Draw\Component\Tester\Application\CommandTestTrait;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -86,7 +85,7 @@ class CronDumpToFileCommandTest extends TestCase
         touch($filePath);
         register_shutdown_function('unlink', $filePath);
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage(sprintf(
             'The file [%s] already exists. Remove the file or use option --override.',
             $filePath
