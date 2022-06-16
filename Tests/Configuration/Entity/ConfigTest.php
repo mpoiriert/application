@@ -13,7 +13,7 @@ class ConfigTest extends TestCase
 {
     private Config $entity;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->entity = new Config();
     }
@@ -47,8 +47,7 @@ class ConfigTest extends TestCase
 
     public function testValueMutator(): void
     {
-        static::assertSame(
-            null,
+        static::assertNull(
             $this->entity->getValue()
         );
 

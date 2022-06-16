@@ -21,7 +21,7 @@ class VersionManagerTest extends TestCase
 
     private EventDispatcherInterface $eventDispatcher;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->service = new VersionManager(
             $this->configurationRegistry = $this->createMock(ConfigurationRegistryInterface::class),

@@ -41,6 +41,6 @@ class CronManager
             $result[] = $cronLine;
         }
 
-        return trim(implode(PHP_EOL, $result)).PHP_EOL;
+        return trim(implode(\PHP_EOL, $result)).\PHP_EOL;
     }
 }

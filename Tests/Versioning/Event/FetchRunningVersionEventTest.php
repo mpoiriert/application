@@ -13,7 +13,7 @@ class FetchRunningVersionEventTest extends TestCase
 {
     private FetchRunningVersionEvent $event;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->event = new FetchRunningVersionEvent();
     }

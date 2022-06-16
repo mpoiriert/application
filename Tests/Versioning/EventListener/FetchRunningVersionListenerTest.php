@@ -17,7 +17,7 @@ class FetchRunningVersionListenerTest extends TestCase
 
     private string $projectDirectory;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->service = new FetchRunningVersionListener(
             $this->projectDirectory = realpath(__DIR__.'/../../../../..')
@@ -26,7 +26,7 @@ class FetchRunningVersionListenerTest extends TestCase
         $this->tearDown();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         @unlink($this->projectDirectory.'/public/version.txt');
     }

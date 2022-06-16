@@ -39,7 +39,7 @@ class DoctrineConfigurationRegistry implements ConfigurationRegistryInterface
 
     public function has(string $name): bool
     {
-        return array_key_exists($name, $this->configs) || null !== $this->find($name);
+        return \array_key_exists($name, $this->configs) || null !== $this->find($name);
     }
 
     public function set(string $name, $value): void

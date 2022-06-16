@@ -13,7 +13,7 @@ class CronManagerTest extends TestCase
 {
     private CronManager $service;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->service = new CronManager();
     }
@@ -22,11 +22,7 @@ class CronManagerTest extends TestCase
     {
         $job = new Job('Job name', 'echo "test"');
         $this->service->addJob($job);
-        $cronTab = <<<CRONTAB
-#Description: 
-* * * * * echo "test" >/dev/null 2>&1
-
-CRONTAB;
+        $cronTab = "#Description: \n* * * * * echo \"test\" >/dev/null 2>&1\n";
 
         static::assertSame(
             $cronTab,
@@ -41,14 +37,8 @@ CRONTAB;
 
         $job = new Job('Job 2', 'echo "test"', '*/5 * * * *', true, 'Job every 5 minutes');
         $this->service->addJob($job);
-        $cronTab = <<<CRONTAB
-#Description: 
-* * * * * echo "test" >/dev/null 2>&1
-
-#Description: Job every 5 minutes
-*/5 * * * * echo "test" >/dev/null 2>&1
-
-CRONTAB;
+        $cronTab = "#Description: \n* * * * * echo \"test\" >/dev/null 2>&1\n\n";
+        $cronTab .= "#Description: Job every 5 minutes\n*/5 * * * * echo \"test\" >/dev/null 2>&1\n";
 
         static::assertSame(
             $cronTab,
@@ -63,7 +53,7 @@ CRONTAB;
         $this->service->addJob($job);
 
         static::assertSame(
-            PHP_EOL,
+            \PHP_EOL,
             $this->service->dumpJobs()
         );
     }

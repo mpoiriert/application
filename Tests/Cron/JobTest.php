@@ -15,7 +15,7 @@ class JobTest extends TestCase
 
     private Job $entity;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->entity = new Job(self::DEFAULT_NAME, self::DEFAULT_COMMAND);
     }
@@ -67,8 +67,7 @@ class JobTest extends TestCase
 
     public function testEnabledMutator(): void
     {
-        static::assertSame(
-            true,
+        static::assertTrue(
             $this->entity->getEnabled()
         );
 
@@ -77,8 +76,7 @@ class JobTest extends TestCase
             $this->entity->setEnabled(false)
         );
 
-        static::assertSame(
-            false,
+        static::assertFalse(
             $this->entity->getEnabled()
         );
     }

@@ -22,7 +22,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         static::$entityManager = static::setUpMySqlWithAnnotationDriver(
-            [dirname((new ReflectionClass(Config::class))->getFileName())]
+            [\dirname((new ReflectionClass(Config::class))->getFileName())]
         );
 
         static::$entityManager
@@ -33,7 +33,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
             ->execute(['name' => 'value']);
     }
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->service = new DoctrineConfigurationRegistry(static::$entityManager);
     }
