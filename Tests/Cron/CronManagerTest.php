@@ -28,7 +28,7 @@ class CronManagerTest extends TestCase
 
 CRONTAB;
 
-        $this->assertSame(
+        static::assertSame(
             $cronTab,
             $this->service->dumpJobs()
         );
@@ -50,7 +50,7 @@ CRONTAB;
 
 CRONTAB;
 
-        $this->assertSame(
+        static::assertSame(
             $cronTab,
             $this->service->dumpJobs()
         );
@@ -62,7 +62,7 @@ CRONTAB;
         $job->setEnabled(false);
         $this->service->addJob($job);
 
-        $this->assertSame(
+        static::assertSame(
             PHP_EOL,
             $this->service->dumpJobs()
         );

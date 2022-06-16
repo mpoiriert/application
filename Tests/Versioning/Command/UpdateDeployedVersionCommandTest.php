@@ -43,11 +43,11 @@ class UpdateDeployedVersionCommandTest extends TestCase
     public function testExecute(): void
     {
         $this->versionManager
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('updateDeployedVersion');
 
         $this->versionManager
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('getRunningVersion')
             ->willReturn($deployedVersion = uniqid('version-'));
 

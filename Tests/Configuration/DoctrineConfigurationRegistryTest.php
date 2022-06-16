@@ -40,12 +40,12 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
     public function testConstruct(): void
     {
-        $this->assertInstanceOf(ConfigurationRegistryInterface::class, $this->service);
+        static::assertInstanceOf(ConfigurationRegistryInterface::class, $this->service);
     }
 
     public function testHasNotSet(): void
     {
-        $this->assertFalse($this->service->has('value'));
+        static::assertFalse($this->service->has('value'));
     }
 
     /**
@@ -53,9 +53,9 @@ class DoctrineConfigurationRegistryTest extends TestCase
      */
     public function testGetDefault(): void
     {
-        $this->assertNull($this->service->get('value'));
+        static::assertNull($this->service->get('value'));
 
-        $this->assertTrue($this->service->get('value', true));
+        static::assertTrue($this->service->get('value', true));
     }
 
     public function testSet(): void
@@ -70,7 +70,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
      */
     public function testHasSet(): void
     {
-        $this->assertTrue($this->service->has('value'));
+        static::assertTrue($this->service->has('value'));
     }
 
     /**
@@ -78,7 +78,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
      */
     public function testGetSet(): void
     {
-        $this->assertSame('the-value', $this->service->get('value'));
+        static::assertSame('the-value', $this->service->get('value'));
     }
 
     /**
@@ -96,7 +96,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
      */
     public function testHasAfterDelete(): void
     {
-        $this->assertFalse($this->service->has('value'));
+        static::assertFalse($this->service->has('value'));
     }
 
     /**
@@ -105,7 +105,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
     public function testGetValueChangeFromOtherScope(): void
     {
         $this->service->set('value', 'the-value');
-        $this->assertSame('the-value', $this->service->get('value'));
+        static::assertSame('the-value', $this->service->get('value'));
 
         static::$entityManager
             ->createQueryBuilder()
@@ -117,7 +117,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
                 ['name' => 'value', 'data' => json_encode(['value' => 'new-value'])]
             );
 
-        $this->assertSame('new-value', $this->service->get('value'));
+        static::assertSame('new-value', $this->service->get('value'));
     }
 
     /**
@@ -126,7 +126,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
     public function testGetValueInvalidState(): void
     {
         $this->service->set('value', 'the-value');
-        $this->assertSame('the-value', $this->service->get('value'));
+        static::assertSame('the-value', $this->service->get('value'));
 
         static::$entityManager
             ->createQueryBuilder()
@@ -140,7 +140,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
         static::$entityManager->clear();
 
-        $this->assertSame('new-value', $this->service->get('value'));
+        static::assertSame('new-value', $this->service->get('value'));
     }
 
     public function provideTestSetGetKeepType(): iterable
@@ -172,6 +172,6 @@ class DoctrineConfigurationRegistryTest extends TestCase
     public function testSetGetKeepType($value): void
     {
         $this->service->set('value', $value);
-        $this->assertSame($value, $this->service->get('value'));
+        static::assertSame($value, $this->service->get('value'));
     }
 }

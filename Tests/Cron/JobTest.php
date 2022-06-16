@@ -22,14 +22,14 @@ class JobTest extends TestCase
 
     public function testNameMutator(): void
     {
-        $this->assertSame(self::DEFAULT_NAME, $this->entity->getName());
+        static::assertSame(self::DEFAULT_NAME, $this->entity->getName());
 
-        $this->assertSame(
+        static::assertSame(
             $this->entity,
             $this->entity->setName($value = uniqid())
         );
 
-        $this->assertSame(
+        static::assertSame(
             $value,
             $this->entity->getName()
         );
@@ -37,14 +37,14 @@ class JobTest extends TestCase
 
     public function testCommandMutator(): void
     {
-        $this->assertSame(self::DEFAULT_COMMAND, $this->entity->getCommand());
+        static::assertSame(self::DEFAULT_COMMAND, $this->entity->getCommand());
 
-        $this->assertSame(
+        static::assertSame(
             $this->entity,
             $this->entity->setCommand($value = uniqid())
         );
 
-        $this->assertSame(
+        static::assertSame(
             $value,
             $this->entity->getCommand()
         );
@@ -52,14 +52,14 @@ class JobTest extends TestCase
 
     public function testDescriptionMutator(): void
     {
-        $this->assertNull($this->entity->getDescription());
+        static::assertNull($this->entity->getDescription());
 
-        $this->assertSame(
+        static::assertSame(
             $this->entity,
             $this->entity->setDescription($value = uniqid())
         );
 
-        $this->assertSame(
+        static::assertSame(
             $value,
             $this->entity->getDescription()
         );
@@ -67,17 +67,17 @@ class JobTest extends TestCase
 
     public function testEnabledMutator(): void
     {
-        $this->assertSame(
+        static::assertSame(
             true,
             $this->entity->getEnabled()
         );
 
-        $this->assertSame(
+        static::assertSame(
             $this->entity,
             $this->entity->setEnabled(false)
         );
 
-        $this->assertSame(
+        static::assertSame(
             false,
             $this->entity->getEnabled()
         );
@@ -85,14 +85,14 @@ class JobTest extends TestCase
 
     public function testExpressionMutator(): void
     {
-        $this->assertSame('* * * * *', $this->entity->getExpression());
+        static::assertSame('* * * * *', $this->entity->getExpression());
 
-        $this->assertSame(
+        static::assertSame(
             $this->entity,
             $this->entity->setExpression($value = uniqid())
         );
 
-        $this->assertSame(
+        static::assertSame(
             $value,
             $this->entity->getExpression()
         );
@@ -100,14 +100,14 @@ class JobTest extends TestCase
 
     public function testOutputMutator(): void
     {
-        $this->assertSame('>/dev/null 2>&1', $this->entity->getOutput());
+        static::assertSame('>/dev/null 2>&1', $this->entity->getOutput());
 
-        $this->assertSame(
+        static::assertSame(
             $this->entity,
             $this->entity->setOutput($value = uniqid())
         );
 
-        $this->assertSame(
+        static::assertSame(
             $value,
             $this->entity->getOutput()
         );
@@ -115,7 +115,7 @@ class JobTest extends TestCase
 
     public function testToArray(): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'name' => 'name',
                 'description' => '',

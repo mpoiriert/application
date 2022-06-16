@@ -46,7 +46,7 @@ class CronDumpToFileCommandTest extends TestCase
     public function testExecuteNewFile(): void
     {
         $this->cronManager
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('dumpJobs')
             ->willReturn('Output');
 
@@ -56,13 +56,13 @@ class CronDumpToFileCommandTest extends TestCase
             ->execute(['filePath' => $filePath])
             ->test(CommandDataTester::create());
 
-        $this->assertSame('Output', file_get_contents($filePath));
+        static::assertSame('Output', file_get_contents($filePath));
     }
 
     public function testExecuteNewFileOverride(): void
     {
         $this->cronManager
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('dumpJobs')
             ->willReturn('Output');
 
@@ -73,13 +73,13 @@ class CronDumpToFileCommandTest extends TestCase
             ->execute(['filePath' => $filePath, '--override' => '1'])
             ->test(CommandDataTester::create());
 
-        $this->assertSame('Output', file_get_contents($filePath));
+        static::assertSame('Output', file_get_contents($filePath));
     }
 
     public function testExecuteNewFileNoOverrideException(): void
     {
         $this->cronManager
-            ->expects($this->never())
+            ->expects(static::never())
             ->method('dumpJobs');
 
         $filePath = sys_get_temp_dir().'/'.uniqid().'.txt';

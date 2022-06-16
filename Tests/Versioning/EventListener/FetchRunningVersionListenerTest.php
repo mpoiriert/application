@@ -33,7 +33,7 @@ class FetchRunningVersionListenerTest extends TestCase
 
     public function testConstruct(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             EventSubscriberInterface::class,
             $this->service
         );
@@ -41,7 +41,7 @@ class FetchRunningVersionListenerTest extends TestCase
 
     public function testGetSubscribedEvents(): void
     {
-        $this->assertSame(
+        static::assertSame(
             [
                 FetchRunningVersionEvent::class => [
                     ['fetchFromFilesystemPublicVersion', 255],
@@ -56,7 +56,7 @@ class FetchRunningVersionListenerTest extends TestCase
     {
         $this->service->fetchFromFilesystemPublicVersion($event = new FetchRunningVersionEvent());
 
-        $this->assertNull($event->getRunningVersion());
+        static::assertNull($event->getRunningVersion());
     }
 
     public function testFetchFromFilesystemPublicVersion(): void
@@ -65,7 +65,7 @@ class FetchRunningVersionListenerTest extends TestCase
 
         $this->service->fetchFromFilesystemPublicVersion($event = new FetchRunningVersionEvent());
 
-        $this->assertSame(
+        static::assertSame(
             $version,
             $event->getRunningVersion()
         );
@@ -81,13 +81,13 @@ class FetchRunningVersionListenerTest extends TestCase
 
         $this->service->fetchFromGit($event = new FetchRunningVersionEvent());
 
-        $this->assertNull($event->getRunningVersion());
+        static::assertNull($event->getRunningVersion());
     }
 
     public function testFetchFromGit(): void
     {
         $this->service->fetchFromGit($event = new FetchRunningVersionEvent());
 
-        $this->assertNotNull($event->getRunningVersion());
+        static::assertNotNull($event->getRunningVersion());
     }
 }

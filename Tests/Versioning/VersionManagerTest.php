@@ -31,7 +31,7 @@ class VersionManagerTest extends TestCase
 
     public function testConstant(): void
     {
-        $this->assertSame(
+        static::assertSame(
             'draw-application-deployed-version',
             $this->service::CONFIG
         );
@@ -39,7 +39,7 @@ class VersionManagerTest extends TestCase
 
     public function testConstruct(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             VersionVerificationInterface::class,
             $this->service
         );
@@ -48,15 +48,15 @@ class VersionManagerTest extends TestCase
     public function testGetRunningVersionNotFound(): void
     {
         $this->eventDispatcher
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('dispatch')
-            ->with($this->isInstanceOf(FetchRunningVersionEvent::class))
+            ->with(static::isInstanceOf(FetchRunningVersionEvent::class))
             ->willReturnArgument(0);
 
-        $this->assertNull($this->service->getRunningVersion());
+        static::assertNull($this->service->getRunningVersion());
 
         // Multiple call will not trigger multiple event
-        $this->assertNull($this->service->getRunningVersion());
+        static::assertNull($this->service->getRunningVersion());
     }
 
     public function testGetRunningVersion(): void
@@ -64,10 +64,10 @@ class VersionManagerTest extends TestCase
         $version = uniqid('version-');
 
         $this->eventDispatcher
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('dispatch')
             ->with(
-                $this->callback(function (FetchRunningVersionEvent $event) use ($version) {
+                static::callback(function (FetchRunningVersionEvent $event) use ($version) {
                     $event->setRunningVersion($version);
 
                     return true;
@@ -75,7 +75,7 @@ class VersionManagerTest extends TestCase
             )
             ->willReturnArgument(0);
 
-        $this->assertSame(
+        static::assertSame(
             $version,
             $this->service->getRunningVersion()
         );
@@ -92,7 +92,7 @@ class VersionManagerTest extends TestCase
         );
 
         $this->configurationRegistry
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('set')
             ->with($this->service::CONFIG, $version);
 
@@ -102,12 +102,12 @@ class VersionManagerTest extends TestCase
     public function testGetDeployedVersion(): void
     {
         $this->configurationRegistry
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('get')
             ->with($this->service::CONFIG)
             ->willReturn($version = uniqid('version-'));
 
-        $this->assertSame(
+        static::assertSame(
             $version,
             $this->service->getDeployedVersion()
         );
@@ -116,7 +116,7 @@ class VersionManagerTest extends TestCase
     public function testIsUpToDate(): void
     {
         $this->configurationRegistry
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('get')
             ->with($this->service::CONFIG)
             ->willReturn($version = uniqid('version-'));
@@ -127,13 +127,13 @@ class VersionManagerTest extends TestCase
             $version
         );
 
-        $this->assertTrue($this->service->isUpToDate());
+        static::assertTrue($this->service->isUpToDate());
     }
 
     public function testIsUpToDateFalse(): void
     {
         $this->configurationRegistry
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('get')
             ->with($this->service::CONFIG)
             ->willReturn(uniqid('version-'));
@@ -144,6 +144,6 @@ class VersionManagerTest extends TestCase
             uniqid('version-')
         );
 
-        $this->assertFalse($this->service->isUpToDate());
+        static::assertFalse($this->service->isUpToDate());
     }
 }
