@@ -8,19 +8,19 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity
  * @ORM\Table(name="draw__config")
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
  *
  * @UniqueEntity(fields={"id"})
  */
 class Config
 {
     /**
-     * @ORM\Id()
+     * @ORM\Id
      * @ORM\Column(name="id", type="string", length=255)
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      * @Assert\Length(min=1, max=255)
      */
     private ?string $id = null;
@@ -105,8 +105,8 @@ class Config
     }
 
     /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
      */
     public function updateTimestamps()
     {
