@@ -26,10 +26,12 @@ class FetchRunningVersionListener implements EventSubscriberInterface
 
     public function fetchFromFilesystemPublicVersion(FetchRunningVersionEvent $event): void
     {
-        switch (true) {
-            case null === $this->projectDirectory:
-            case !file_exists($versionFilename = $this->projectDirectory.'/public/version.txt'):
-                return;
+        if (null === $this->projectDirectory) {
+            return;
+        }
+
+        if (!file_exists($versionFilename = $this->projectDirectory.'/public/version.txt')) {
+            return;
         }
 
         $event->setRunningVersion(trim(file_get_contents($versionFilename)));
