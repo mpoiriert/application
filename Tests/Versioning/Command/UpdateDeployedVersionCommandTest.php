@@ -6,6 +6,7 @@ use Draw\Component\Application\Versioning\Command\UpdateDeployedVersionCommand;
 use Draw\Component\Application\Versioning\VersionManager;
 use Draw\Component\Tester\Application\CommandDataTester;
 use Draw\Component\Tester\Application\CommandTestTrait;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 
@@ -16,6 +17,9 @@ class UpdateDeployedVersionCommandTest extends TestCase
 {
     use CommandTestTrait;
 
+    /**
+     * @var VersionManager&MockObject
+     */
     private VersionManager $versionManager;
 
     public function createCommand(): Command

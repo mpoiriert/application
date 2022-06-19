@@ -6,6 +6,7 @@ use Draw\Component\Application\Cron\Command\CronDumpToFileCommand;
 use Draw\Component\Application\Cron\CronManager;
 use Draw\Component\Tester\Application\CommandDataTester;
 use Draw\Component\Tester\Application\CommandTestTrait;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,6 +19,9 @@ class CronDumpToFileCommandTest extends TestCase
 {
     use CommandTestTrait;
 
+    /**
+     * @var CronManager&MockObject
+     */
     private CronManager $cronManager;
 
     public function createCommand(): Command

@@ -22,11 +22,11 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        static::$entityManager = static::setUpMySqlWithAnnotationDriver(
+        self::$entityManager = static::setUpMySqlWithAnnotationDriver(
             [\dirname((new \ReflectionClass(Config::class))->getFileName())]
         );
 
-        static::$entityManager
+        self::$entityManager
             ->createQueryBuilder()
             ->delete(Config::class, 'config')
             ->andWhere('config.id = :name')
@@ -36,7 +36,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->object = new DoctrineConfigurationRegistry(static::$entityManager);
+        $this->object = new DoctrineConfigurationRegistry(self::$entityManager);
     }
 
     public function testConstruct(): void
@@ -108,7 +108,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
         $this->object->set('value', 'the-value');
         static::assertSame('the-value', $this->object->get('value'));
 
-        static::$entityManager
+        self::$entityManager
             ->createQueryBuilder()
             ->update(Config::class, 'config')
             ->set('config.data', ':data')
@@ -129,7 +129,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
         $this->object->set('value', 'the-value');
         static::assertSame('the-value', $this->object->get('value'));
 
-        static::$entityManager
+        self::$entityManager
             ->createQueryBuilder()
             ->update(Config::class, 'config')
             ->set('config.data', ':data')
@@ -139,7 +139,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
                 ['name' => 'value', 'data' => json_encode(['value' => 'new-value'])]
             );
 
-        static::$entityManager->clear();
+        self::$entityManager->clear();
 
         static::assertSame('new-value', $this->object->get('value'));
     }
