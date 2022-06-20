@@ -18,7 +18,7 @@ class UpdateDeployedVersionCommand extends Command
         $this->versionManager = $versionManager;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('draw:application:update-deployed-version')

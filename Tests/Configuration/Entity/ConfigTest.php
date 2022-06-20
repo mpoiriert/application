@@ -124,7 +124,7 @@ class ConfigTest extends TestCase
         );
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         static::assertSame(
             '',

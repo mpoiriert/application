@@ -69,6 +69,9 @@ class Config
         return $this->data['value'] ?: null;
     }
 
+    /**
+     * @param mixed $value
+     */
     public function setValue($value): self
     {
         $this->data = compact('value');
@@ -108,7 +111,7 @@ class Config
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function updateTimestamps()
+    public function updateTimestamps(): void
     {
         $this->getCreatedAt();
         $this->setUpdatedAt(new \DateTimeImmutable());
