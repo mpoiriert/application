@@ -11,7 +11,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="draw__config")
  * @ORM\HasLifecycleCallbacks
- *
  * @UniqueEntity(fields={"id"})
  */
 class Config
@@ -19,7 +18,6 @@ class Config
     /**
      * @ORM\Id
      * @ORM\Column(name="id", type="string", length=255)
-     *
      * @Assert\NotBlank
      * @Assert\Length(min=1, max=255)
      */
