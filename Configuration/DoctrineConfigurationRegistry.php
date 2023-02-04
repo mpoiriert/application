@@ -14,11 +14,8 @@ class DoctrineConfigurationRegistry implements ConfigurationRegistryInterface
      */
     private array $configs = [];
 
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function get(string $name, $default = null)

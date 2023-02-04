@@ -9,20 +9,14 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class VersionManager implements VersionVerificationInterface
 {
-    public const CONFIG = 'draw-application-deployed-version';
+    final public const CONFIG = 'draw-application-deployed-version';
 
     private ?string $runningVersion = null;
 
-    private EventDispatcherInterface$eventDispatcher;
-
-    private ConfigurationRegistryInterface $configurationRegistry;
-
     public function __construct(
-        ConfigurationRegistryInterface $configurationRegistry,
-        EventDispatcherInterface $eventDispatcher
+        private ConfigurationRegistryInterface $configurationRegistry,
+        private EventDispatcherInterface $eventDispatcher
     ) {
-        $this->configurationRegistry = $configurationRegistry;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function getRunningVersion(): ?string

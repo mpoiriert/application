@@ -7,8 +7,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FetchRunningVersionListener implements EventSubscriberInterface
 {
-    private ?string $projectDirectory;
-
     public static function getSubscribedEvents(): array
     {
         return [
@@ -19,9 +17,8 @@ class FetchRunningVersionListener implements EventSubscriberInterface
         ];
     }
 
-    public function __construct(?string $projectDirectory)
+    public function __construct(private ?string $projectDirectory)
     {
-        $this->projectDirectory = $projectDirectory;
     }
 
     public function fetchFromFilesystemPublicVersion(FetchRunningVersionEvent $event): void
@@ -60,6 +57,7 @@ class FetchRunningVersionListener implements EventSubscriberInterface
                 break;
             case 0 !== $code:
             case 2 >= mb_strlen($version):
+                break;
         }
     }
 }

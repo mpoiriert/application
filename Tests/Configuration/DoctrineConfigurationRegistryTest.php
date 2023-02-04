@@ -169,10 +169,8 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
     /**
      * @dataProvider provideTestSetGetKeepType
-     *
-     * @param mixed $value
      */
-    public function testSetGetKeepType($value): void
+    public function testSetGetKeepType(mixed $value): void
     {
         $this->object->set('value', $value);
         static::assertSame($value, $this->object->get('value'));

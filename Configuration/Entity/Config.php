@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(fields={"id"})
  */
-class Config
+class Config implements \Stringable
 {
     /**
      * @ORM\Id
@@ -67,10 +67,7 @@ class Config
         return $this->data['value'] ?: null;
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function setValue($value): self
+    public function setValue(mixed $value): self
     {
         $this->data = compact('value');
 

@@ -11,12 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CronDumpToFileCommand extends Command
 {
-    private CronManager $cronManager;
-
-    public function __construct(CronManager $cronManager)
+    public function __construct(private CronManager $cronManager)
     {
         parent::__construct();
-        $this->cronManager = $cronManager;
     }
 
     protected function configure(): void

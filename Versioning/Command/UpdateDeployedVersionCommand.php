@@ -10,12 +10,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class UpdateDeployedVersionCommand extends Command
 {
-    private VersionManager $versionManager;
-
-    public function __construct(VersionManager $versionManager)
+    public function __construct(private VersionManager $versionManager)
     {
         parent::__construct();
-        $this->versionManager = $versionManager;
     }
 
     protected function configure(): void

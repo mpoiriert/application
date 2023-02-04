@@ -5,42 +5,32 @@ namespace Draw\Component\Application\Cron;
 class Job
 {
     /**
-     * The name of the job for reference.
-     */
-    private string $name;
-
-    /**
-     * The description of the job.
-     */
-    private ?string $description;
-
-    /**
-     * The cron execution expression configuration.
-     */
-    private string $expression;
-
-    /**
-     * The command to execute.
-     */
-    private string $command;
-
-    /**
-     * If the job is enabled or not.
-     */
-    private bool $enabled;
-
-    /**
      * Where the output will be redirect.
      */
     private string $output = '>/dev/null 2>&1';
 
-    public function __construct(string $name, string $command, string $expression = '* * * * *', bool $enabled = true, ?string $description = null)
-    {
-        $this->name = $name;
-        $this->expression = $expression;
-        $this->command = $command;
-        $this->enabled = $enabled;
-        $this->description = $description;
+    public function __construct(
+        /**
+         * The name of the job for reference.
+         */
+        private string $name,
+        /**
+         * The command to execute.
+         */
+        private string $command,
+        /**
+         * The cron execution expression configuration.
+         */
+        private string $expression = '* * * * *',
+        /**
+         * If the job is enabled or not.
+         */
+        private bool $enabled = true,
+        /**
+         * The description of the job.
+         */
+        private ?string $description = null
+    ) {
     }
 
     public function getName(): string
