@@ -7,35 +7,25 @@ use Draw\Component\Core\DateTimeUtils;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="draw__config")
- * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"id"})
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'draw__config')]
+#[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(fields: ['id'])]
 class Config implements \Stringable
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="id", type="string", length=255)
-     * @Assert\NotBlank
-     * @Assert\Length(min=1, max=255)
-     */
+    #[ORM\Id]
+    #[ORM\Column(name: 'id', type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 1, max: 255)]
     private ?string $id = null;
 
-    /**
-     * @ORM\Column(name="data", type="json", nullable=false)
-     */
+    #[ORM\Column(name: 'data', type: 'json', nullable: false)]
     private array $data = ['value' => null];
 
-    /**
-     * @ORM\Column(name="updated_at", type="datetime_immutable", nullable=false)
-     */
+    #[ORM\Column(name: 'updated_at', type: 'datetime_immutable', nullable: false)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    /**
-     * @ORM\Column(name="created_at", type="datetime_immutable", nullable=false)
-     */
+    #[ORM\Column(name: 'created_at', type: 'datetime_immutable', nullable: false)]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function getId(): ?string
@@ -102,10 +92,8 @@ class Config implements \Stringable
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
-     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function updateTimestamps(): void
     {
         $this->getCreatedAt();
