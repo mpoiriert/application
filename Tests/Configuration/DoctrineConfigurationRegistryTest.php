@@ -4,6 +4,7 @@ namespace Draw\Component\Application\Tests\Configuration;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\UnitOfWork;
+use Doctrine\Persistence\ManagerRegistry;
 use Draw\Component\Application\Configuration\DoctrineConfigurationRegistry;
 use Draw\Component\Application\Configuration\Entity\Config;
 use Draw\Component\Core\Reflection\ReflectionAccessor;
@@ -39,7 +40,73 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->object = new DoctrineConfigurationRegistry(self::$entityManager);
+        $managerRegistry = new class(self::$entityManager) implements ManagerRegistry {
+            public function __construct(private EntityManagerInterface $entityManager)
+            {
+            }
+
+            public function getDefaultConnectionName()
+            {
+                return 'default';
+            }
+
+            public function getConnection($name = null)
+            {
+                return $this->entityManager->getConnection();
+            }
+
+            public function getConnections()
+            {
+                return [$this->getConnection()];
+            }
+
+            public function getConnectionNames()
+            {
+                return ['default'];
+            }
+
+            public function getDefaultManagerName()
+            {
+                return 'default';
+            }
+
+            public function getManager($name = null)
+            {
+                return $this->entityManager;
+            }
+
+            public function getManagers()
+            {
+                return ['default' => $this->entityManager];
+            }
+
+            public function resetManager($name = null)
+            {
+                return $this->entityManager;
+            }
+
+            public function getAliasNamespace($alias)
+            {
+                return $alias;
+            }
+
+            public function getManagerNames()
+            {
+                return ['default' => 'manager.default'];
+            }
+
+            public function getRepository($persistentObject, $persistentManagerName = null)
+            {
+                return $this->entityManager->getRepository($persistentObject);
+            }
+
+            public function getManagerForClass($class)
+            {
+                return $this->entityManager;
+            }
+        };
+
+        $this->object = new DoctrineConfigurationRegistry($managerRegistry);
     }
 
     public function testConstruct(): void
