@@ -3,10 +3,13 @@
 namespace Draw\Component\Application\Tests\Configuration;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\UnitOfWork;
 use Draw\Component\Application\Configuration\DoctrineConfigurationRegistry;
 use Draw\Component\Application\Configuration\Entity\Config;
+use Draw\Component\Core\Reflection\ReflectionAccessor;
 use Draw\Component\Tester\DoctrineOrmTrait;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
+use Draw\Contracts\Application\Exception\ConfigurationIsNotAccessibleException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -174,5 +177,24 @@ class DoctrineConfigurationRegistryTest extends TestCase
     {
         $this->object->set('value', $value);
         static::assertSame($value, $this->object->get('value'));
+    }
+
+    public function testEntityManagerClosed(): void
+    {
+        $this->object->set($key = uniqid(), uniqid());
+
+        $this->object->get($key);
+
+        $entity = self::$entityManager->find(Config::class, $key);
+        self::$entityManager->close();
+
+        ReflectionAccessor::setPropertyValue(
+            self::$entityManager->getUnitOfWork(),
+            'entityStates',
+            [spl_object_id($entity) => UnitOfWork::STATE_MANAGED]
+        );
+
+        static::expectException(ConfigurationIsNotAccessibleException::class);
+        $this->object->get($key);
     }
 }

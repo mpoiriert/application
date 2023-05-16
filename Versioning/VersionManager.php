@@ -4,6 +4,7 @@ namespace Draw\Component\Application\Versioning;
 
 use Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
+use Draw\Contracts\Application\Exception\VersionInformationIsNotAccessibleException;
 use Draw\Contracts\Application\VersionVerificationInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -24,7 +25,11 @@ class VersionManager implements VersionVerificationInterface
         if (null === $this->runningVersion) {
             $this->runningVersion = '';
 
-            $this->eventDispatcher->dispatch($event = new FetchRunningVersionEvent());
+            try {
+                $this->eventDispatcher->dispatch($event = new FetchRunningVersionEvent());
+            } catch (\Throwable $error) {
+                throw new VersionInformationIsNotAccessibleException(previous: $error);
+            }
 
             $this->runningVersion = $event->getRunningVersion() ?: '';
         }
@@ -39,7 +44,11 @@ class VersionManager implements VersionVerificationInterface
 
     public function getDeployedVersion(): ?string
     {
-        return $this->configurationRegistry->get(static::CONFIG);
+        try {
+            return $this->configurationRegistry->get(static::CONFIG);
+        } catch (\Throwable $error) {
+            throw new VersionInformationIsNotAccessibleException(previous: $error);
+        }
     }
 
     public function isUpToDate(): bool

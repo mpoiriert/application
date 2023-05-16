@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\UnitOfWork;
 use Draw\Component\Application\Configuration\Entity\Config;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
+use Draw\Contracts\Application\Exception\ConfigurationIsNotAccessibleException;
 
 class DoctrineConfigurationRegistry implements ConfigurationRegistryInterface
 {
@@ -20,18 +21,24 @@ class DoctrineConfigurationRegistry implements ConfigurationRegistryInterface
 
     public function get(string $name, $default = null)
     {
-        if (!isset($this->configs[$name])) {
-            $this->configs[$name] = $this->find($name);
-        } else {
-            if (UnitOfWork::STATE_MANAGED !== $this->entityManager->getUnitOfWork()->getEntityState($this->configs[$name])) {
-                unset($this->configs[$name]);
+        try {
+            if (!isset($this->configs[$name])) {
+                $this->configs[$name] = $this->find($name);
+            } else {
+                if (UnitOfWork::STATE_MANAGED !== $this->entityManager->getUnitOfWork()->getEntityState($this->configs[$name])) {
+                    unset($this->configs[$name]);
 
-                return $this->get($name, $default);
+                    return $this->get($name, $default);
+                }
+                $this->entityManager->refresh($this->configs[$name]);
             }
-            $this->entityManager->refresh($this->configs[$name]);
-        }
 
-        return isset($this->configs[$name]) ? $this->configs[$name]->getValue() : $default;
+            return isset($this->configs[$name]) ? $this->configs[$name]->getValue() : $default;
+        } catch (ConfigurationIsNotAccessibleException $error) {
+            throw $error;
+        } catch (\Throwable $throwable) {
+            throw new ConfigurationIsNotAccessibleException(previous: $throwable);
+        }
     }
 
     public function has(string $name): bool
@@ -41,30 +48,44 @@ class DoctrineConfigurationRegistry implements ConfigurationRegistryInterface
 
     public function set(string $name, $value): void
     {
-        $config = $this->find($name);
-        if (null === $config) {
-            $config = new Config();
-            $config->setId($name);
-            $this->entityManager->persist($config);
+        try {
+            $config = $this->find($name);
+            if (null === $config) {
+                $config = new Config();
+                $config->setId($name);
+                $this->entityManager->persist($config);
+            }
+
+            $config->setValue($value);
+
+            $this->entityManager->flush();
+        } catch (ConfigurationIsNotAccessibleException $error) {
+            throw $error;
+        } catch (\Throwable $throwable) {
+            throw new ConfigurationIsNotAccessibleException(previous: $throwable);
         }
-
-        $config->setValue($value);
-
-        $this->entityManager->flush();
     }
 
     public function delete(string $name): void
     {
-        $config = $this->find($name);
-        if ($config) {
-            $this->entityManager->remove($config);
-            $this->entityManager->flush();
+        try {
+            $config = $this->find($name);
+            if ($config) {
+                $this->entityManager->remove($config);
+                $this->entityManager->flush();
+            }
+            unset($this->configs[$name]);
+        } catch (\Throwable $throwable) {
+            throw new ConfigurationIsNotAccessibleException(previous: $throwable);
         }
-        unset($this->configs[$name]);
     }
 
     private function find(string $name): ?Config
     {
-        return $this->entityManager->find(Config::class, $name);
+        try {
+            return $this->entityManager->find(Config::class, $name);
+        } catch (\Throwable $throwable) {
+            throw new ConfigurationIsNotAccessibleException(previous: $throwable);
+        }
     }
 }
