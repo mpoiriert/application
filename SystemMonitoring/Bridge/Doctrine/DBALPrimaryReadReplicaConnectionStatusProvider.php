@@ -47,7 +47,7 @@ class DBALPrimaryReadReplicaConnectionStatusProvider implements ConnectionStatus
             $connection->executeQuery($dummySql);
 
             yield new ServiceStatus(
-                'Primary Connection',
+                'Replica Connection',
                 Status::OK
             );
         } catch (\Throwable $error) {
