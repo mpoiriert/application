@@ -26,7 +26,7 @@ class ServiceStatus
             if ($error instanceof \Throwable) {
                 $this->errors[$index] = sprintf(
                     '%s(code: %s): %s',
-                    \get_class($error),
+                    $error::class,
                     $error->getCode(),
                     $error->getMessage()
                 );
