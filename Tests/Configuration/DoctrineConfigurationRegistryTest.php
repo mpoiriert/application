@@ -57,12 +57,12 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
             public function getConnections()
             {
-                return [$this->getConnection()];
+                return ['default' => $this->getConnection()];
             }
 
             public function getConnectionNames()
             {
-                return ['default'];
+                return ['default' => 'default'];
             }
 
             public function getDefaultManagerName()
