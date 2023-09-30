@@ -12,6 +12,7 @@ class MonitoredService
         private ServiceStatusProviderInterface $serviceStatusProvider,
         private array $contexts,
         private bool $anyContexts,
+        private array $options = []
     ) {
     }
 
@@ -39,6 +40,6 @@ class MonitoredService
             throw new \RuntimeException(sprintf('Context "%s" is not supported by "%s".', $context, $this->name));
         }
 
-        yield from $this->serviceStatusProvider->getServiceStatuses();
+        yield from $this->serviceStatusProvider->getServiceStatuses($this->options);
     }
 }

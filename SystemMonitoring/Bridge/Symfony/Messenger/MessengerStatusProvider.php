@@ -16,9 +16,12 @@ class MessengerStatusProvider implements ServiceStatusProviderInterface
     {
     }
 
-    public function getServiceStatuses(): iterable
+    public function getServiceStatuses(array $options = []): iterable
     {
-        foreach ($this->transportRepository->findAll() as $transportName => $transport) {
+        $transportNames = $options['transportNames'] ?? $this->transportRepository->getTransportNames();
+
+        foreach ($transportNames as $transportName) {
+            $transport = $this->transportRepository->get($transportName);
             $serviceName = sprintf('Messenger transport [%s]', $transportName);
             if (
                 $transport instanceof SyncTransport

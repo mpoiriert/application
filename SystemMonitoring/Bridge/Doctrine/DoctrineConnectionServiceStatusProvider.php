@@ -18,7 +18,7 @@ class DoctrineConnectionServiceStatusProvider implements ServiceStatusProviderIn
     ) {
     }
 
-    public function getServiceStatuses(): iterable
+    public function getServiceStatuses(array $options = []): iterable
     {
         foreach ($this->managerRegistry->getConnections() as $key => $connection) {
             foreach ($this->connectionTesters as $connectionTester) {

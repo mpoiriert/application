@@ -7,5 +7,5 @@ interface ServiceStatusProviderInterface
     /**
      * @return iterable<ServiceStatus>
      */
-    public function getServiceStatuses(): iterable;
+    public function getServiceStatuses(array $options = []): iterable;
 }
