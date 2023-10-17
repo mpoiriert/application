@@ -11,11 +11,12 @@ use Draw\Component\Core\Reflection\ReflectionAccessor;
 use Draw\Component\Tester\DoctrineOrmTrait;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
 use Draw\Contracts\Application\Exception\ConfigurationIsNotAccessibleException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Draw\Component\Application\Configuration\DoctrineConfigurationRegistry
- */
+#[CoversClass(DoctrineConfigurationRegistry::class)]
 class DoctrineConfigurationRegistryTest extends TestCase
 {
     use DoctrineOrmTrait;
@@ -119,9 +120,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
         static::assertFalse($this->object->has('value'));
     }
 
-    /**
-     * @depends testHasNotSet
-     */
+    #[Depends('testHasNotSet')]
     public function testGetDefault(): void
     {
         static::assertNull($this->object->get('value'));
@@ -136,25 +135,19 @@ class DoctrineConfigurationRegistryTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    /**
-     * @depends testSet
-     */
+    #[Depends('testSet')]
     public function testHasSet(): void
     {
         static::assertTrue($this->object->has('value'));
     }
 
-    /**
-     * @depends testHasSet
-     */
+    #[Depends('testHasSet')]
     public function testGetSet(): void
     {
         static::assertSame('the-value', $this->object->get('value'));
     }
 
-    /**
-     * @depends testHasSet
-     */
+    #[Depends('testHasSet')]
     public function testDelete(): void
     {
         $this->object->delete('value');
@@ -162,17 +155,13 @@ class DoctrineConfigurationRegistryTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    /**
-     * @depends testDelete
-     */
+    #[Depends('testDelete')]
     public function testHasAfterDelete(): void
     {
         static::assertFalse($this->object->has('value'));
     }
 
-    /**
-     * @depends testGetSet
-     */
+    #[Depends('testGetSet')]
     public function testGetValueChangeFromOtherScope(): void
     {
         $this->object->set('value', 'the-value');
@@ -191,9 +180,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
         static::assertSame('new-value', $this->object->get('value'));
     }
 
-    /**
-     * @depends testGetSet
-     */
+    #[Depends('testGetSet')]
     public function testGetValueInvalidState(): void
     {
         $this->object->set('value', 'the-value');
@@ -214,7 +201,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
         static::assertSame('new-value', $this->object->get('value'));
     }
 
-    public function provideTestSetGetKeepType(): iterable
+    public static function provideTestSetGetKeepType(): iterable
     {
         yield 'string' => [
             'value',
@@ -237,9 +224,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideTestSetGetKeepType
-     */
+    #[DataProvider('provideTestSetGetKeepType')]
     public function testSetGetKeepType(mixed $value): void
     {
         $this->object->set('value', $value);

@@ -7,26 +7,19 @@ use Draw\Component\Application\Versioning\VersionManager;
 use Draw\Component\Core\Reflection\ReflectionAccessor;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
 use Draw\Contracts\Application\VersionVerificationInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @covers \Draw\Component\Application\Versioning\VersionManager
- */
+#[CoversClass(VersionManager::class)]
 class VersionManagerTest extends TestCase
 {
     private VersionManager $service;
 
-    /**
-     * @var ConfigurationRegistryInterface&MockObject
-     */
-    private ConfigurationRegistryInterface $configurationRegistry;
+    private ConfigurationRegistryInterface&MockObject $configurationRegistry;
 
-    /**
-     * @var EventDispatcherInterface&MockObject
-     */
-    private EventDispatcherInterface $eventDispatcher;
+    private MockObject&EventDispatcherInterface $eventDispatcher;
 
     protected function setUp(): void
     {

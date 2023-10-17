@@ -3,11 +3,10 @@
 namespace Draw\Component\Application\Tests\Cron;
 
 use Draw\Component\Application\Cron\Job;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Draw\Component\Application\Cron\Job
- */
+#[CoversClass(Job::class)]
 class JobTest extends TestCase
 {
     private const DEFAULT_NAME = 'name';

@@ -6,23 +6,19 @@ use Draw\Component\Application\Cron\Command\CronDumpToFileCommand;
 use Draw\Component\Application\Cron\CronManager;
 use Draw\Component\Tester\Application\CommandDataTester;
 use Draw\Component\Tester\Application\CommandTestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-/**
- * @covers \Draw\Component\Application\Cron\Command\CronDumpToFileCommand
- */
+#[CoversClass(CronDumpToFileCommand::class)]
 class CronDumpToFileCommandTest extends TestCase
 {
     use CommandTestTrait;
 
-    /**
-     * @var CronManager&MockObject
-     */
-    private CronManager $cronManager;
+    private CronManager&MockObject $cronManager;
 
     public function createCommand(): Command
     {
@@ -36,12 +32,12 @@ class CronDumpToFileCommandTest extends TestCase
         return 'draw:cron:dump-to-file';
     }
 
-    public function provideTestArgument(): iterable
+    public static function provideTestArgument(): iterable
     {
         yield ['filePath', InputArgument::REQUIRED];
     }
 
-    public function provideTestOption(): iterable
+    public static function provideTestOption(): iterable
     {
         yield ['override', null, InputOption::VALUE_NONE];
     }

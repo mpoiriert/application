@@ -5,12 +5,11 @@ namespace Draw\Component\Application\Tests\Versioning\EventListener;
 use Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent;
 use Draw\Component\Application\Versioning\EventListener\FetchRunningVersionListener;
 use Draw\Component\Core\Reflection\ReflectionAccessor;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * @covers \Draw\Component\Application\Versioning\EventListener\FetchRunningVersionListener
- */
+#[CoversClass(FetchRunningVersionListener::class)]
 class FetchRunningVersionListenerTest extends TestCase
 {
     private FetchRunningVersionListener $service;

@@ -16,7 +16,7 @@
         "symfony/event-dispatcher": "^5.4.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0 || ^9.0",
+        "phpunit/phpunit": "^9.0 || ^10.0",
         "draw/tester": "^0.10",
         "symfony/cache": "^5.4.3",
         "symfony/console": "^5.4.3"

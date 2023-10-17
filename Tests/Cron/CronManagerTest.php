@@ -4,11 +4,10 @@ namespace Draw\Component\Application\Tests\Cron;
 
 use Draw\Component\Application\Cron\CronManager;
 use Draw\Component\Application\Cron\Job;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Draw\Component\Application\Cron\CronManager
- */
+#[CoversClass(CronManager::class)]
 class CronManagerTest extends TestCase
 {
     private CronManager $service;

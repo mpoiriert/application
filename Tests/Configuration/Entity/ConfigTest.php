@@ -3,11 +3,10 @@
 namespace Draw\Component\Application\Tests\Configuration\Entity;
 
 use Draw\Component\Application\Configuration\Entity\Config;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Draw\Component\Application\Configuration\Entity\Config
- */
+#[CoversClass(Config::class)]
 class ConfigTest extends TestCase
 {
     private Config $entity;

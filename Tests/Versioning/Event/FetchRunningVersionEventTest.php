@@ -3,12 +3,11 @@
 namespace Draw\Component\Application\Tests\Versioning\Event;
 
 use Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\Event;
 
-/**
- * @covers \Draw\Component\Application\Versioning\Event\FetchRunningVersionEvent
- */
+#[CoversClass(FetchRunningVersionEvent::class)]
 class FetchRunningVersionEventTest extends TestCase
 {
     private FetchRunningVersionEvent $event;
