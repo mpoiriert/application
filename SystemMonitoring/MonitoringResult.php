@@ -4,7 +4,7 @@ namespace Draw\Component\Application\SystemMonitoring;
 
 class MonitoringResult
 {
-    private Status $status = Status::UNKNOWN;
+    private ?Status $status = null;
 
     /**
      * @param array<string, array<ServiceStatus>> $serviceStatuses
@@ -17,16 +17,20 @@ class MonitoringResult
         foreach (array_merge(...array_values($this->serviceStatuses)) as $serviceStatus) {
             switch ($serviceStatus->getStatus()) {
                 case Status::OK:
-                    $this->status = Status::OK;
+                    $this->status ??= Status::OK;
                     break;
                 case Status::UNKNOWN:
-                    $this->status = Status::UNKNOWN;
-                    break 2;
+                    if (Status::ERROR !== $this->status) {
+                        $this->status = Status::UNKNOWN;
+                    }
+                    break;
                 case Status::ERROR:
                     $this->status = Status::ERROR;
                     break 2;
             }
         }
+
+        $this->status ??= Status::UNKNOWN;
     }
 
     public function getStatus(): Status
