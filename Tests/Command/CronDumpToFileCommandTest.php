@@ -9,7 +9,6 @@ use Draw\Component\Tester\Application\CommandTestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -20,9 +19,9 @@ class CronDumpToFileCommandTest extends TestCase
 
     private CronManager&MockObject $cronManager;
 
-    public function createCommand(): Command
+    protected function setUp(): void
     {
-        return new CronDumpToFileCommand(
+        $this->command = new CronDumpToFileCommand(
             $this->cronManager = $this->createMock(CronManager::class)
         );
     }

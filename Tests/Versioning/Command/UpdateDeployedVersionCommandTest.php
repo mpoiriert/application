@@ -9,7 +9,6 @@ use Draw\Component\Tester\Application\CommandTestTrait;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Console\Command\Command;
 
 #[CoversClass(UpdateDeployedVersionCommand::class)]
 class UpdateDeployedVersionCommandTest extends TestCase
@@ -18,9 +17,9 @@ class UpdateDeployedVersionCommandTest extends TestCase
 
     private VersionManager&MockObject $versionManager;
 
-    public function createCommand(): Command
+    protected function setUp(): void
     {
-        return new UpdateDeployedVersionCommand(
+        $this->command = new UpdateDeployedVersionCommand(
             $this->versionManager = $this->createMock(VersionManager::class)
         );
     }
