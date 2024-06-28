@@ -2,7 +2,7 @@
 
 namespace Draw\Component\Application\Feature;
 
-interface SelfInitializeFeatureInterface
+interface SelfInitializeFeatureInterface extends FeatureInterface
 {
     public function initialize(array $configuration): void;
 }
