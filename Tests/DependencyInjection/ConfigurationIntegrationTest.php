@@ -2,7 +2,6 @@
 
 namespace Draw\Component\Application\Tests\DependencyInjection;
 
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\DoctrineExtension;
 use Draw\Component\Application\Configuration\DoctrineConfigurationRegistry;
 use Draw\Component\Application\Configuration\Entity\Config;
 use Draw\Component\Application\DependencyInjection\ConfigurationIntegration;
@@ -49,7 +48,7 @@ class ConfigurationIntegrationTest extends IntegrationTestCase
     public function testPrepend(): void
     {
         $containerBuilder = new ContainerBuilder();
-        $containerBuilder->registerExtension(new DoctrineExtension());
+        $containerBuilder->registerExtension($this->mockExtension('doctrine'));
 
         $this->integration->prepend(
             $containerBuilder,

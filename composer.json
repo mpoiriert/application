@@ -20,7 +20,8 @@
         "draw/dependency-injection": "^0.11",
         "draw/tester": "^0.11",
         "symfony/cache": "^6.4.0",
-        "symfony/console": "^6.4.0"
+        "symfony/console": "^6.4.0",
+        "symfony/messenger": "^6.4.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

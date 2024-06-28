@@ -2,7 +2,6 @@
 
 namespace Draw\Component\Application\Tests\DependencyInjection;
 
-use Draw\Bundle\FrameworkExtraBundle\DependencyInjection\DrawFrameworkExtraExtension;
 use Draw\Component\Application\DependencyInjection\SystemMonitoringIntegration;
 use Draw\Component\Application\SystemMonitoring\Action\PingAction;
 use Draw\Component\Application\SystemMonitoring\Bridge\Doctrine\DBALConnectionStatusProvider;
@@ -45,7 +44,7 @@ class SystemMonitoringIntegrationTest extends IntegrationTestCase
     public function testPrepend(): void
     {
         $containerBuilder = new ContainerBuilder();
-        $containerBuilder->registerExtension(new DrawFrameworkExtraExtension());
+        $containerBuilder->registerExtension($this->mockExtension('draw_framework_extra'));
 
         $this->integration->prepend(
             $containerBuilder,
