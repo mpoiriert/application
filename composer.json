@@ -16,15 +16,15 @@
         "ext-iconv": "*",
         "doctrine/common": "^3.1",
         "doctrine/orm": "^2.11",
-        "draw/contracts": "^0.10.40",
-        "draw/core": "^0.10.40",
+        "draw/contracts": "^0.11",
+        "draw/core": "^0.11",
         "symfony/doctrine-bridge": "^6.4.0",
         "symfony/event-dispatcher": "^6.4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0",
-        "draw/dependency-injection": "^0.10.40",
-        "draw/tester": "^0.10.40",
+        "draw/dependency-injection": "^0.11",
+        "draw/tester": "^0.11",
         "symfony/cache": "^6.4.0",
         "symfony/console": "^6.4.0",
         "symfony/messenger": "^6.4.0"
