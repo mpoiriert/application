@@ -29,7 +29,7 @@ class Job
         /**
          * The description of the job.
          */
-        private ?string $description = null
+        private ?string $description = null,
     ) {
     }
 

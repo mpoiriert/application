@@ -16,7 +16,7 @@ class VersionManager implements VersionVerificationInterface
 
     public function __construct(
         private ConfigurationRegistryInterface $configurationRegistry,
-        private EventDispatcherInterface $eventDispatcher
+        private EventDispatcherInterface $eventDispatcher,
     ) {
     }
 

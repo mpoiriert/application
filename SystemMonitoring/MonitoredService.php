@@ -12,7 +12,7 @@ class MonitoredService
         private ServiceStatusProviderInterface $serviceStatusProvider,
         private array $contexts,
         private bool $anyContexts,
-        private array $options = []
+        private array $options = [],
     ) {
     }
 
@@ -37,7 +37,7 @@ class MonitoredService
     public function getServiceStatuses(?string $context = null): iterable
     {
         if (!$this->supports($context)) {
-            throw new \RuntimeException(sprintf('Context "%s" is not supported by "%s".', $context, $this->name));
+            throw new \RuntimeException(\sprintf('Context "%s" is not supported by "%s".', $context, $this->name));
         }
 
         yield from $this->serviceStatusProvider->getServiceStatuses($this->options);

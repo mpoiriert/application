@@ -14,7 +14,7 @@ class DoctrineConnectionServiceStatusProvider implements ServiceStatusProviderIn
      */
     public function __construct(
         private ManagerRegistry $managerRegistry,
-        private iterable $connectionTesters
+        private iterable $connectionTesters,
     ) {
     }
 
@@ -25,7 +25,7 @@ class DoctrineConnectionServiceStatusProvider implements ServiceStatusProviderIn
                 if ($connectionTester->supports($connection)) {
                     foreach ($connectionTester->getConnectionServiceStatuses($connection) as $serviceStatus) {
                         yield new ServiceStatus(
-                            sprintf('Doctrine Connection [%s] %s', $key, $serviceStatus->getName()),
+                            \sprintf('Doctrine Connection [%s] %s', $key, $serviceStatus->getName()),
                             $serviceStatus->getStatus(),
                             $serviceStatus->getErrors()
                         );
@@ -36,7 +36,7 @@ class DoctrineConnectionServiceStatusProvider implements ServiceStatusProviderIn
             }
 
             yield new ServiceStatus(
-                sprintf('Doctrine Connection [%s]', $key),
+                \sprintf('Doctrine Connection [%s]', $key),
                 Status::UNKNOWN,
             );
         }

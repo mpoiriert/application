@@ -30,7 +30,7 @@ class CronDumpToFileCommand extends Command
         $filePath = $input->getArgument('filePath');
 
         if (is_file($filePath) && !$input->getOption('override')) {
-            throw new \RuntimeException(sprintf('The file [%s] already exists. Remove the file or use option --override.', $filePath));
+            throw new \RuntimeException(\sprintf('The file [%s] already exists. Remove the file or use option --override.', $filePath));
         }
 
         file_put_contents($filePath, $this->cronManager->dumpJobs());

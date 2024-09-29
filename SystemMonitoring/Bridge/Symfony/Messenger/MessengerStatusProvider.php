@@ -22,7 +22,7 @@ class MessengerStatusProvider implements ServiceStatusProviderInterface
 
         foreach ($transportNames as $transportName) {
             $transport = $this->transportRepository->get($transportName);
-            $serviceName = sprintf('Messenger transport [%s]', $transportName);
+            $serviceName = \sprintf('Messenger transport [%s]', $transportName);
             if (
                 $transport instanceof SyncTransport
                 || $transport instanceof InMemoryTransport

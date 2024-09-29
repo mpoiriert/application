@@ -43,7 +43,7 @@ class FetchRunningVersionListener implements EventSubscriberInterface
         }
 
         $version = exec(
-            sprintf(
+            \sprintf(
                 '(cd %s && git describe --tags --always --dirty) 2>&1',
                 $this->projectDirectory
             ),

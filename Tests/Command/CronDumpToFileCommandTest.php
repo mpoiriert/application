@@ -85,7 +85,7 @@ class CronDumpToFileCommandTest extends TestCase
         register_shutdown_function('unlink', $filePath);
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage(sprintf(
+        $this->expectExceptionMessage(\sprintf(
             'The file [%s] already exists. Remove the file or use option --override.',
             $filePath
         ));
