@@ -6,6 +6,9 @@ use Draw\Component\Application\Configuration\Entity\Config;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(Config::class)]
 class ConfigTest extends TestCase
 {

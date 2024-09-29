@@ -14,6 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @property ConfigurationIntegration $integration
+ *
+ * @internal
  */
 #[CoversClass(ConfigurationIntegration::class)]
 class ConfigurationIntegrationTest extends IntegrationTestCase

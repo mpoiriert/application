@@ -13,7 +13,7 @@ class MonitoringResult
         private array $serviceStatuses,
         private ?string $context = null,
     ) {
-        /* @var ServiceStatus $serviceStatus */
+        /** @var ServiceStatus $serviceStatus */
         foreach (array_merge(...array_values($this->serviceStatuses)) as $serviceStatus) {
             switch ($serviceStatus->getStatus()) {
                 case Status::OK:

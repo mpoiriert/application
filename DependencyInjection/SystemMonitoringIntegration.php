@@ -35,7 +35,7 @@ class SystemMonitoringIntegration implements IntegrationInterface, PrependIntegr
     {
         $this->registerClasses(
             $loader,
-            $namespace = 'Draw\\Component\\Application\\SystemMonitoring\\',
+            $namespace = 'Draw\Component\Application\SystemMonitoring\\',
             $directory = \dirname((new \ReflectionClass(System::class))->getFileName()),
             [
                 $directory.'/Error.php',
@@ -69,15 +69,18 @@ class SystemMonitoringIntegration implements IntegrationInterface, PrependIntegr
 
         $container
             ->getDefinition(System::class)
-            ->setArgument('$monitoredServices', new IteratorArgument($monitoredServices));
+            ->setArgument('$monitoredServices', new IteratorArgument($monitoredServices))
+        ;
 
         $container
             ->registerForAutoconfiguration(ConnectionStatusProviderInterface::class)
-            ->addTag(ConnectionStatusProviderInterface::class);
+            ->addTag(ConnectionStatusProviderInterface::class)
+        ;
 
         $container
             ->getDefinition(DoctrineConnectionServiceStatusProvider::class)
-            ->setArgument('$connectionTesters', new TaggedIteratorArgument(ConnectionStatusProviderInterface::class));
+            ->setArgument('$connectionTesters', new TaggedIteratorArgument(ConnectionStatusProviderInterface::class))
+        ;
 
         $this->renameDefinitions(
             $container,
@@ -99,7 +102,8 @@ class SystemMonitoringIntegration implements IntegrationInterface, PrependIntegr
 
         $container
             ->getDefinition('draw.system_monitoring.action.ping_action')
-            ->addTag('controller.service_arguments');
+            ->addTag('controller.service_arguments')
+        ;
     }
 
     public function prepend(ContainerBuilder $container, array $config): void
@@ -139,7 +143,7 @@ class SystemMonitoringIntegration implements IntegrationInterface, PrependIntegr
             ->children()
                 ->arrayNode('service_status_providers')
                 ->beforeNormalization()
-                    ->always(function ($config) {
+                    ->always(static function ($config) {
                         foreach ($config as $name => $configuration) {
                             if (!isset($configuration['name'])) {
                                 $config[$name]['name'] = $name;
@@ -155,7 +159,7 @@ class SystemMonitoringIntegration implements IntegrationInterface, PrependIntegr
                         ->children()
                             ->scalarNode('name')
                                 ->validate()
-                                    ->ifTrue(fn ($value) => \is_int($value))
+                                    ->ifTrue(static fn ($value) => \is_int($value))
                                     ->thenInvalid('You must specify a name for the service status provider. Can be via the attribute or the key.')
                                 ->end()
                                 ->isRequired()
@@ -168,7 +172,7 @@ class SystemMonitoringIntegration implements IntegrationInterface, PrependIntegr
                             ->booleanNode('any_contexts')->defaultFalse()->end()
                             ->arrayNode('contexts')
                                 ->validate()
-                                    ->ifTrue(function ($values) {
+                                    ->ifTrue(static function ($values) {
                                         foreach ($values as $value) {
                                             if (str_starts_with($value, '_')) {
                                                 return true;
@@ -184,6 +188,7 @@ class SystemMonitoringIntegration implements IntegrationInterface, PrependIntegr
                         ->end()
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
     }
 }

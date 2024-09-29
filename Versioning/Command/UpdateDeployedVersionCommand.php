@@ -19,7 +19,8 @@ class UpdateDeployedVersionCommand extends Command
     {
         $this
             ->setName('draw:application:update-deployed-version')
-            ->setDescription('You should run this after every successful application deployment.');
+            ->setDescription('You should run this after every successful application deployment.')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -27,7 +28,8 @@ class UpdateDeployedVersionCommand extends Command
         $this->versionManager->updateDeployedVersion();
 
         (new SymfonyStyle($input, $output))
-            ->success('Deployed Version set to: '.$this->versionManager->getRunningVersion());
+            ->success('Deployed Version set to: '.$this->versionManager->getRunningVersion())
+        ;
 
         return 0;
     }

@@ -25,13 +25,14 @@ class VersioningIntegration implements IntegrationInterface
     {
         $this->registerClasses(
             $loader,
-            $namespace = 'Draw\\Component\\Application\\Versioning\\',
+            $namespace = 'Draw\Component\Application\Versioning\\',
             \dirname((new \ReflectionClass(VersionManager::class))->getFileName())
         );
 
         $container
             ->getDefinition(FetchRunningVersionListener::class)
-            ->setArgument('$projectDirectory', new Parameter('kernel.project_dir'));
+            ->setArgument('$projectDirectory', new Parameter('kernel.project_dir'))
+        ;
 
         $container->setAlias(VersionVerificationInterface::class, VersionManager::class);
 

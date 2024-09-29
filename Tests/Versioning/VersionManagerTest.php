@@ -12,6 +12,9 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
+/**
+ * @internal
+ */
 #[CoversClass(VersionManager::class)]
 class VersionManagerTest extends TestCase
 {
@@ -51,7 +54,8 @@ class VersionManagerTest extends TestCase
             ->expects(static::once())
             ->method('dispatch')
             ->with(static::isInstanceOf(FetchRunningVersionEvent::class))
-            ->willReturnArgument(0);
+            ->willReturnArgument(0)
+        ;
 
         static::assertNull($this->service->getRunningVersion());
 
@@ -67,13 +71,14 @@ class VersionManagerTest extends TestCase
             ->expects(static::once())
             ->method('dispatch')
             ->with(
-                static::callback(function (FetchRunningVersionEvent $event) use ($version) {
+                static::callback(static function (FetchRunningVersionEvent $event) use ($version) {
                     $event->setRunningVersion($version);
 
                     return true;
                 })
             )
-            ->willReturnArgument(0);
+            ->willReturnArgument(0)
+        ;
 
         static::assertSame(
             $version,
@@ -94,7 +99,8 @@ class VersionManagerTest extends TestCase
         $this->configurationRegistry
             ->expects(static::once())
             ->method('set')
-            ->with($this->service::CONFIG, $version);
+            ->with($this->service::CONFIG, $version)
+        ;
 
         $this->service->updateDeployedVersion();
     }
@@ -105,7 +111,8 @@ class VersionManagerTest extends TestCase
             ->expects(static::once())
             ->method('get')
             ->with($this->service::CONFIG)
-            ->willReturn($version = uniqid('version-'));
+            ->willReturn($version = uniqid('version-'))
+        ;
 
         static::assertSame(
             $version,
@@ -119,7 +126,8 @@ class VersionManagerTest extends TestCase
             ->expects(static::once())
             ->method('get')
             ->with($this->service::CONFIG)
-            ->willReturn($version = uniqid('version-'));
+            ->willReturn($version = uniqid('version-'))
+        ;
 
         ReflectionAccessor::setPropertyValue(
             $this->service,
@@ -136,7 +144,8 @@ class VersionManagerTest extends TestCase
             ->expects(static::once())
             ->method('get')
             ->with($this->service::CONFIG)
-            ->willReturn(uniqid('version-'));
+            ->willReturn(uniqid('version-'))
+        ;
 
         ReflectionAccessor::setPropertyValue(
             $this->service,

@@ -10,6 +10,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(UpdateDeployedVersionCommand::class)]
 class UpdateDeployedVersionCommandTest extends TestCase
 {
@@ -43,12 +46,14 @@ class UpdateDeployedVersionCommandTest extends TestCase
     {
         $this->versionManager
             ->expects(static::once())
-            ->method('updateDeployedVersion');
+            ->method('updateDeployedVersion')
+        ;
 
         $this->versionManager
             ->expects(static::once())
             ->method('getRunningVersion')
-            ->willReturn($deployedVersion = uniqid('version-'));
+            ->willReturn($deployedVersion = uniqid('version-'))
+        ;
 
         $this->execute([])
             ->test(
@@ -56,6 +61,7 @@ class UpdateDeployedVersionCommandTest extends TestCase
                     0,
                     ['Deployed Version set to: '.$deployedVersion]
                 )
-            );
+            )
+        ;
     }
 }

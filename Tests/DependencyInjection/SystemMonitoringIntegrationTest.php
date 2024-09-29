@@ -18,6 +18,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * @property SystemMonitoringIntegration $integration
+ *
+ * @internal
  */
 #[CoversClass(SystemMonitoringIntegration::class)]
 class SystemMonitoringIntegrationTest extends IntegrationTestCase

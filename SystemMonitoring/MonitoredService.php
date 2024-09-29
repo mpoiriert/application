@@ -31,7 +31,7 @@ class MonitoredService
             return true;
         }
 
-        return \in_array($context, $this->contexts);
+        return \in_array($context, $this->contexts, true);
     }
 
     public function getServiceStatuses(?string $context = null): iterable

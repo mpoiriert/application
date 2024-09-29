@@ -25,7 +25,7 @@ class ConfigurationIntegration implements IntegrationInterface, PrependIntegrati
     {
         $this->registerClasses(
             $loader,
-            $namespace = 'Draw\\Component\\Application\\Configuration\\',
+            $namespace = 'Draw\Component\Application\Configuration\\',
             \dirname((new \ReflectionClass(DoctrineConfigurationRegistry::class))->getFileName())
         );
 

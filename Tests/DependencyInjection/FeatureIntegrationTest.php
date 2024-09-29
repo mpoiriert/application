@@ -12,6 +12,8 @@ use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
  * @property ConfigurationIntegration $integration
+ *
+ * @internal
  */
 #[CoversClass(FeatureIntegration::class)]
 class FeatureIntegrationTest extends IntegrationTestCase

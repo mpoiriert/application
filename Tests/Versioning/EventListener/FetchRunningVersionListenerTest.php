@@ -9,6 +9,9 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * @internal
+ */
 #[CoversClass(FetchRunningVersionListener::class)]
 class FetchRunningVersionListenerTest extends TestCase
 {

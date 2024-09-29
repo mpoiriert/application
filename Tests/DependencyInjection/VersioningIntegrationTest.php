@@ -16,6 +16,8 @@ use Symfony\Component\DependencyInjection\Parameter;
 
 /**
  * @property VersioningIntegration $integration
+ *
+ * @internal
  */
 #[CoversClass(VersioningIntegration::class)]
 class VersioningIntegrationTest extends IntegrationTestCase
@@ -57,7 +59,7 @@ class VersioningIntegrationTest extends IntegrationTestCase
                     [
                         FetchRunningVersionListener::class,
                     ],
-                    function (Definition $definition): void {
+                    static function (Definition $definition): void {
                         $parameter = $definition->getArgument('$projectDirectory');
 
                         static::assertInstanceOf(Parameter::class, $parameter);

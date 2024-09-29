@@ -15,6 +15,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 #[CoversClass(DoctrineConfigurationRegistry::class)]
 class DoctrineConfigurationRegistryTest extends TestCase
 {
@@ -35,7 +38,8 @@ class DoctrineConfigurationRegistryTest extends TestCase
             ->delete(Config::class, 'config')
             ->andWhere('config.id = :name')
             ->getQuery()
-            ->execute(['name' => 'value']);
+            ->execute(['name' => 'value'])
+        ;
     }
 
     protected function setUp(): void
@@ -108,7 +112,8 @@ class DoctrineConfigurationRegistryTest extends TestCase
             ->getQuery()
             ->execute(
                 ['name' => 'value', 'data' => json_encode(['value' => 'new-value'])]
-            );
+            )
+        ;
 
         static::assertSame('new-value', $this->object->get('value'));
     }
@@ -127,7 +132,8 @@ class DoctrineConfigurationRegistryTest extends TestCase
             ->getQuery()
             ->execute(
                 ['name' => 'value', 'data' => json_encode(['value' => 'new-value'])]
-            );
+            )
+        ;
 
         self::$entityManager->clear();
 

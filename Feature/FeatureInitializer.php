@@ -15,7 +15,8 @@ class FeatureInitializer
     public function initialize(FeatureInterface $feature): void
     {
         $configuration = $this->configurationRegistry
-            ->get($feature->getName(), []);
+            ->get($feature->getName(), [])
+        ;
 
         $properties = (new \ReflectionObject($feature))->getProperties();
 

@@ -25,7 +25,8 @@ class SystemStatusesCommand extends Command
                 'context',
                 InputArgument::OPTIONAL,
                 'The context to use to validate the system statuses.',
-            );
+            )
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -41,7 +42,6 @@ class SystemStatusesCommand extends Command
         $io->title('System Statuses');
 
         foreach ($monitoringResult->getServiceStatuses() as $name => $serviceStatuses) {
-
             $io->section('Service '.$name);
 
             foreach ($serviceStatuses as $serviceStatus) {
@@ -59,7 +59,6 @@ class SystemStatusesCommand extends Command
                         break;
                 }
             }
-
         }
 
         $io->section('Results');
