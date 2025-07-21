@@ -140,7 +140,14 @@ class DoctrineConfigurationRegistryTest extends TestCase
         static::assertSame('new-value', $this->object->get('value'));
     }
 
-    public static function provideTestSetGetKeepType(): iterable
+    #[DataProvider('provideSetGetKeepTypeCases')]
+    public function testSetGetKeepType(mixed $value): void
+    {
+        $this->object->set('value', $value);
+        static::assertSame($value, $this->object->get('value'));
+    }
+
+    public static function provideSetGetKeepTypeCases(): iterable
     {
         yield 'string' => [
             'value',
@@ -161,13 +168,6 @@ class DoctrineConfigurationRegistryTest extends TestCase
         yield 'float' => [
             1.5,
         ];
-    }
-
-    #[DataProvider('provideTestSetGetKeepType')]
-    public function testSetGetKeepType(mixed $value): void
-    {
-        $this->object->set('value', $value);
-        static::assertSame($value, $this->object->get('value'));
     }
 
     public function testEntityManagerClosed(): void
