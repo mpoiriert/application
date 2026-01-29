@@ -15,7 +15,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/common": "^3.1",
-        "doctrine/orm": "^2.11",
+        "doctrine/orm": "^3.6",
         "draw/contracts": "^0.37",
         "draw/core": "^0.37",
         "symfony/doctrine-bridge": "^6.4.0",

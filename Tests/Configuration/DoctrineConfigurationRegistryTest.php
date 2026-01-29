@@ -185,7 +185,7 @@ class DoctrineConfigurationRegistryTest extends TestCase
             [spl_object_id($entity) => UnitOfWork::STATE_MANAGED]
         );
 
-        static::expectException(ConfigurationIsNotAccessibleException::class);
+        $this->expectException(ConfigurationIsNotAccessibleException::class);
         $this->object->get($key);
     }
 }
