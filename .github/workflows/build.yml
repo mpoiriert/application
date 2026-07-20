@@ -1,4 +1,4 @@
-# github-build --organization ugroupmedia --ignored_linters eslint,pmd,bandit,flake8 --excluded_folders './app/api/tests/App/Component/Scenario/Blender/fixtures',var
+# github-build --organization cloud-officer
 ---
 name: Build
 'on':
@@ -66,6 +66,7 @@ env:
   PHP-EXTENSIONS: composer, openswoole-26.2.0, imap, redis-6.2.0, amqp, protobuf-4.31.0
   PHP-INI-VALUES: memory_limit=4G
   PHP-TOOLS: composer
+  PHP-VERSION: 8.5.8
   PHPCS-VERSION: v3.94.2
   PUSHER_SECRET: "${{ secrets.PUSHER_SECRET }}"
   RABBITMQ-PORTS: 5672:5672 15672:15672 5671:5671
@@ -123,21 +124,6 @@ jobs:
     - name: Actionlint
       id: actionlint
       uses: cloud-officer/ci-actions/linters/actionlint@v2
-      with:
-        linters: "${{needs.variables.outputs.LINTERS}}"
-        ssh-key: "${{secrets.SSH_KEY}}"
-        github-token: "${{secrets.GH_PAT}}"
-  hadolint:
-    name: Docker Linter
-    runs-on: ubuntu-latest
-    needs:
-    - variables
-    if: "${{needs.variables.outputs.SKIP_LINTERS != '1' && github.event_name == 'pull_request'}}"
-    timeout-minutes: 30
-    steps:
-    - name: Hadolint
-      id: hadolint
-      uses: cloud-officer/ci-actions/linters/hadolint@v2
       with:
         linters: "${{needs.variables.outputs.LINTERS}}"
         ssh-key: "${{secrets.SSH_KEY}}"
@@ -209,21 +195,6 @@ jobs:
     steps:
     - name: Semgrep
       uses: cloud-officer/ci-actions/linters/semgrep@v2
-      with:
-        linters: "${{needs.variables.outputs.LINTERS}}"
-        ssh-key: "${{secrets.SSH_KEY}}"
-        github-token: "${{secrets.GH_PAT}}"
-  shellcheck:
-    name: Shell Scripts Linter
-    runs-on: ubuntu-latest
-    needs:
-    - variables
-    if: "${{needs.variables.outputs.SKIP_LINTERS != '1' && github.event_name == 'pull_request'}}"
-    timeout-minutes: 30
-    steps:
-    - name: ShellCheck
-      id: shellcheck
-      uses: cloud-officer/ci-actions/linters/shellcheck@v2
       with:
         linters: "${{needs.variables.outputs.LINTERS}}"
         ssh-key: "${{secrets.SSH_KEY}}"
@@ -352,191 +323,20 @@ jobs:
         php bin/console draw:tester:coverage-check ./tmp/phpunit/report/coverage.xml 65
       env:
         GITHUB_TOKEN: "${{secrets.GH_PAT}}"
-    - name: Composer (sbin/phpstan)
-      shell: bash
-      run: echo "skipped - sbin/phpstan is a PHPStan-only tooling dir with no composer install to run"
-      env:
-        GITHUB_TOKEN: "${{secrets.GH_PAT}}"
-    - name: PHPUnit (sbin/phpstan)
-      shell: bash
-      run: echo "skipped - sbin/phpstan has no PHPUnit tests"
-      env:
-        GITHUB_TOKEN: "${{secrets.GH_PAT}}"
-  codedeploy:
-    name: Code Deploy
-    runs-on: ubuntu-latest
-    needs:
-    - variables
-    - actionlint
-    - hadolint
-    - markdownlint
-    - phpcs
-    - phpstan
-    - semgrep
-    - shellcheck
-    - trivy
-    - yamllint
-    - licenses
-    - php_unit_tests
-    if: "${{always() && (needs.variables.outputs.DEPLOY_ON_BETA == '1' || needs.variables.outputs.DEPLOY_ON_RC == '1' || needs.variables.outputs.DEPLOY_ON_PROD == '1') && needs.variables.result != 'failure' && needs.actionlint.result != 'failure' && needs.hadolint.result != 'failure' && needs.markdownlint.result != 'failure' && needs.phpcs.result != 'failure' && needs.phpstan.result != 'failure' && needs.semgrep.result != 'failure' && needs.shellcheck.result != 'failure' && needs.trivy.result != 'failure' && needs.yamllint.result != 'failure' && needs.licenses.result != 'failure' && needs.php_unit_tests.result != 'failure'}}"
-    timeout-minutes: 30
-    strategy:
-      matrix:
-        application:
-        - api
-        - grpc
-    steps:
-    - name: Setup
-      id: setup
-      uses: cloud-officer/ci-actions/setup@v2
-      with:
-        php-extensions: "${{env.PHP-EXTENSIONS}}"
-        php-ini-values: "${{env.PHP-INI-VALUES}}"
-        php-coverage: "${{env.PHP-COVERAGE}}"
-        php-tools: "${{env.PHP-TOOLS}}"
-        mysql-version: "${{env.MYSQL-VERSION}}"
-        redis-distribution: "${{env.REDIS-DISTRIBUTION}}"
-        redis-port: "${{env.REDIS_PORT}}"
-        redis-version: "${{env.REDIS-VERSION}}"
-        rabbitmq-version: "${{env.RABBITMQ-VERSION}}"
-        rabbitmq-ports: "${{env.RABBITMQ-PORTS}}"
-        apt-packages: "${{env.APT-PACKAGES}}"
-        ssh-key: "${{secrets.SSH_KEY}}"
-        aws-access-key-id: "${{secrets.AWS_ACCESS_KEY_ID}}"
-        aws-secret-access-key: "${{secrets.AWS_SECRET_ACCESS_KEY}}"
-        aws-region: "${{secrets.AWS_DEFAULT_REGION}}"
-        github-token: "${{secrets.GH_PAT}}"
-    - name: Composer
-      shell: bash
-      run: composer install --optimize-autoloader --no-interaction --prefer-dist --no-scripts && make update-wordlists
-      env:
-        GITHUB_TOKEN: "${{secrets.GH_PAT}}"
-    - name: Update Packages
-      shell: bash
-      if: "${{needs.variables.outputs.UPDATE_PACKAGES == '1'}}"
-      run: touch update-packages
-    - name: Zip
-      shell: bash
-      if: "${{needs.variables.outputs.DEPLOY_ON_BETA == '1' || needs.variables.outputs.DEPLOY_ON_RC == '1' || needs.variables.outputs.DEPLOY_ON_PROD == '1'}}"
-      run: |
-        echo "${{needs.variables.outputs.BUILD_NAME}}" > ./public/version.txt
-        bin/${{matrix.application}} translation:push loco
-        bin/${{matrix.application}} translation:pull loco --force
-        find vendor -type d -name '.git' -prune -exec rm -rf {} +
-        rm -rf var/cache/* var/log/* vendor/composer/autoload_real.php vendor/autoload.php
-        mv ./app/${{matrix.application}}/bin/scale_php.sh ./bin/
-        mv ./app/${{matrix.application}}/codedeploy ./
-        mv ./app/${{matrix.application}}/appspec.yml ./
-        mv -f ./app/${{matrix.application}}/etc/php ./etc
-        mv -f ./app/${{matrix.application}}/etc/cron.d ./etc
-        if [ -d ./app/${{matrix.application}}/etc/ssl ]; then
-          mv -f ./app/${{matrix.application}}/etc/ssl ./etc
-        fi
-
-        zip --quiet --recurse-paths "${{matrix.application}}-${{needs.variables.outputs.BUILD_NAME}}.zip" ./* ./.env --exclude ./docs
-        mkdir deployment
-        mv "${{matrix.application}}-${{needs.variables.outputs.BUILD_NAME}}.zip" "deployment/${{matrix.application}}-${{needs.variables.outputs.BUILD_NAME}}.zip"
-    - name: S3Copy
-      uses: cloud-officer/ci-actions/codedeploy/s3copy@v2
-      if: "${{needs.variables.outputs.DEPLOY_ON_BETA == '1' || needs.variables.outputs.DEPLOY_ON_RC == '1' || needs.variables.outputs.DEPLOY_ON_PROD == '1'}}"
-      with:
-        aws-access-key-id: "${{secrets.AWS_ACCESS_KEY_ID}}"
-        aws-secret-access-key: "${{secrets.AWS_SECRET_ACCESS_KEY}}"
-        aws-region: "${{secrets.AWS_DEFAULT_REGION}}"
-        source: deployment
-        target: s3://${{secrets.CODEDEPLOY_BUCKET}}/${{github.repository}}
-  beta_deploy:
-    name: Beta Deploy
-    runs-on: ubuntu-latest
-    needs:
-    - variables
-    - codedeploy
-    if: "${{always() && needs.codedeploy.result == 'success' && needs.variables.outputs.DEPLOY_ON_BETA == '1'}}"
-    timeout-minutes: 30
-    strategy:
-      matrix:
-        application:
-        - api
-        - grpc
-    steps:
-    - name: Beta Deploy
-      uses: cloud-officer/ci-actions/codedeploy/deploy@v2
-      with:
-        aws-access-key-id: "${{secrets.AWS_ACCESS_KEY_ID}}"
-        aws-secret-access-key: "${{secrets.AWS_SECRET_ACCESS_KEY}}"
-        aws-region: "${{secrets.AWS_DEFAULT_REGION}}"
-        application-name: "${{matrix.application}}"
-        deployment-group-name: beta
-        s3-bucket: "${{secrets.CODEDEPLOY_BUCKET}}"
-        s3-key: "${{github.repository}}/${{matrix.application}}-${{needs.variables.outputs.BUILD_NAME}}.zip"
-  rc_deploy:
-    name: Rc Deploy
-    runs-on: ubuntu-latest
-    needs:
-    - variables
-    - codedeploy
-    if: "${{always() && needs.codedeploy.result == 'success' && needs.variables.outputs.DEPLOY_ON_RC == '1'}}"
-    timeout-minutes: 30
-    strategy:
-      matrix:
-        application:
-        - api
-        - grpc
-    steps:
-    - name: Rc Deploy
-      uses: cloud-officer/ci-actions/codedeploy/deploy@v2
-      with:
-        aws-access-key-id: "${{secrets.AWS_ACCESS_KEY_ID}}"
-        aws-secret-access-key: "${{secrets.AWS_SECRET_ACCESS_KEY}}"
-        aws-region: "${{secrets.AWS_DEFAULT_REGION}}"
-        application-name: "${{matrix.application}}"
-        deployment-group-name: rc
-        s3-bucket: "${{secrets.CODEDEPLOY_BUCKET}}"
-        s3-key: "${{github.repository}}/${{matrix.application}}-${{needs.variables.outputs.BUILD_NAME}}.zip"
-  prod_deploy:
-    name: Prod Deploy
-    runs-on: ubuntu-latest
-    needs:
-    - variables
-    - codedeploy
-    if: "${{always() && needs.codedeploy.result == 'success' && needs.variables.outputs.DEPLOY_ON_PROD == '1'}}"
-    timeout-minutes: 30
-    strategy:
-      matrix:
-        application:
-        - api
-        - grpc
-    steps:
-    - name: Prod Deploy
-      uses: cloud-officer/ci-actions/codedeploy/deploy@v2
-      with:
-        aws-access-key-id: "${{secrets.AWS_ACCESS_KEY_ID}}"
-        aws-secret-access-key: "${{secrets.AWS_SECRET_ACCESS_KEY}}"
-        aws-region: "${{secrets.AWS_DEFAULT_REGION}}"
-        application-name: "${{matrix.application}}"
-        deployment-group-name: prod
-        s3-bucket: "${{secrets.CODEDEPLOY_BUCKET}}"
-        s3-key: "${{github.repository}}/${{matrix.application}}-${{needs.variables.outputs.BUILD_NAME}}.zip"
   slack:
     name: Publish Statuses
     runs-on: ubuntu-latest
     needs:
     - variables
     - actionlint
-    - hadolint
     - markdownlint
     - phpcs
     - phpstan
     - semgrep
-    - shellcheck
     - trivy
     - yamllint
     - licenses
     - php_unit_tests
-    - codedeploy
-    - beta_deploy
-    - rc_deploy
-    - prod_deploy
     if: always()
     timeout-minutes: 30
     steps:
