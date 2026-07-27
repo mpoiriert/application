@@ -45,8 +45,7 @@ class FeatureIntegrationTest extends IntegrationTestCase
                     ]
                 ),
             ],
-            [
-            ],
+            [],
             [],
         ];
     }

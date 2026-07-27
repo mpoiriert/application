@@ -21,45 +21,45 @@ class ConfigTest extends TestCase
 
     public function testIdMutator(): void
     {
-        static::assertNull($this->entity->getId());
+        $this->assertNull($this->entity->getId());
 
-        static::assertSame(
+        $this->assertSame(
             $this->entity,
             $this->entity->setId($value = uniqid())
         );
 
-        static::assertSame($value, $this->entity->getId());
+        $this->assertSame($value, $this->entity->getId());
     }
 
     public function testDataMutator(): void
     {
-        static::assertSame(
+        $this->assertSame(
             ['value' => null],
             $this->entity->getData()
         );
 
-        static::assertSame(
+        $this->assertSame(
             $this->entity,
             $this->entity->setData($value = ['value' => uniqid()])
         );
 
-        static::assertSame($value, $this->entity->getData());
+        $this->assertSame($value, $this->entity->getData());
     }
 
     public function testValueMutator(): void
     {
-        static::assertNull(
+        $this->assertNull(
             $this->entity->getValue()
         );
 
-        static::assertSame(
+        $this->assertSame(
             $this->entity,
             $this->entity->setValue($value = uniqid())
         );
 
-        static::assertSame($value, $this->entity->getValue());
+        $this->assertSame($value, $this->entity->getValue());
 
-        static::assertSame(
+        $this->assertSame(
             ['value' => $value],
             $this->entity->getData()
         );
@@ -67,18 +67,18 @@ class ConfigTest extends TestCase
 
     public function testCreatedAtMutator(): void
     {
-        static::assertEqualsWithDelta(
+        $this->assertEqualsWithDelta(
             new \DateTimeImmutable(),
             $this->entity->getCreatedAt(),
             1
         );
 
-        static::assertSame(
+        $this->assertSame(
             $this->entity,
             $this->entity->setCreatedAt($value = new \DateTimeImmutable('+ 5 minutes'))
         );
 
-        static::assertSame(
+        $this->assertSame(
             $value->getTimestamp(),
             $this->entity->getCreatedAt()->getTimestamp()
         );
@@ -86,23 +86,23 @@ class ConfigTest extends TestCase
 
     public function testUpdatedAtMutator(): void
     {
-        static::assertEqualsWithDelta(
+        $this->assertEqualsWithDelta(
             new \DateTimeImmutable(),
             $this->entity->getUpdatedAt(),
             1
         );
 
-        static::assertSame(
+        $this->assertSame(
             $this->entity->getCreatedAt()->getTimestamp(),
             $this->entity->getUpdatedAt()->getTimestamp()
         );
 
-        static::assertSame(
+        $this->assertSame(
             $this->entity,
             $this->entity->setUpdatedAt($value = new \DateTimeImmutable('+ 5 minutes'))
         );
 
-        static::assertSame(
+        $this->assertSame(
             $value->getTimestamp(),
             $this->entity->getUpdatedAt()->getTimestamp()
         );
@@ -115,12 +115,12 @@ class ConfigTest extends TestCase
 
         $this->entity->updateTimestamps();
 
-        static::assertSame(
+        $this->assertSame(
             $value->getTimestamp(),
             $this->entity->getCreatedAt()->getTimestamp()
         );
 
-        static::assertNotSame(
+        $this->assertNotSame(
             $value->getTimestamp(),
             $this->entity->getUpdatedAt()->getTimestamp()
         );
@@ -128,14 +128,14 @@ class ConfigTest extends TestCase
 
     public function testToString(): void
     {
-        static::assertSame(
+        $this->assertSame(
             '',
             (string) $this->entity,
         );
 
         $this->entity->setId($value = uniqid());
 
-        static::assertSame(
+        $this->assertSame(
             $value,
             (string) $this->entity,
         );

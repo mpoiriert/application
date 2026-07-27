@@ -22,7 +22,7 @@ class FetchRunningVersionEventTest extends TestCase
 
     public function testConstruct(): void
     {
-        static::assertInstanceOf(
+        $this->assertInstanceOf(
             Event::class,
             $this->event
         );
@@ -30,20 +30,20 @@ class FetchRunningVersionEventTest extends TestCase
 
     public function testRunningVersionMutator(): void
     {
-        static::assertFalse($this->event->isPropagationStopped());
+        $this->assertFalse($this->event->isPropagationStopped());
 
-        static::assertNull($this->event->getRunningVersion());
+        $this->assertNull($this->event->getRunningVersion());
 
-        static::assertSame(
+        $this->assertSame(
             $this->event,
             $this->event->setRunningVersion($value = uniqid())
         );
 
-        static::assertSame(
+        $this->assertSame(
             $value,
             $this->event->getRunningVersion()
         );
 
-        static::assertTrue($this->event->isPropagationStopped());
+        $this->assertTrue($this->event->isPropagationStopped());
     }
 }

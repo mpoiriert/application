@@ -49,20 +49,20 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
     public function testConstruct(): void
     {
-        static::assertInstanceOf(ConfigurationRegistryInterface::class, $this->object);
+        $this->assertInstanceOf(ConfigurationRegistryInterface::class, $this->object);
     }
 
     public function testHasNotSet(): void
     {
-        static::assertFalse($this->object->has('value'));
+        $this->assertFalse($this->object->has('value'));
     }
 
     #[Depends('testHasNotSet')]
     public function testGetDefault(): void
     {
-        static::assertNull($this->object->get('value'));
+        $this->assertNull($this->object->get('value'));
 
-        static::assertTrue($this->object->get('value', true));
+        $this->assertTrue($this->object->get('value', true));
     }
 
     public function testSet(): void
@@ -75,13 +75,13 @@ class DoctrineConfigurationRegistryTest extends TestCase
     #[Depends('testSet')]
     public function testHasSet(): void
     {
-        static::assertTrue($this->object->has('value'));
+        $this->assertTrue($this->object->has('value'));
     }
 
     #[Depends('testHasSet')]
     public function testGetSet(): void
     {
-        static::assertSame('the-value', $this->object->get('value'));
+        $this->assertSame('the-value', $this->object->get('value'));
     }
 
     #[Depends('testHasSet')]
@@ -95,14 +95,14 @@ class DoctrineConfigurationRegistryTest extends TestCase
     #[Depends('testDelete')]
     public function testHasAfterDelete(): void
     {
-        static::assertFalse($this->object->has('value'));
+        $this->assertFalse($this->object->has('value'));
     }
 
     #[Depends('testGetSet')]
     public function testGetValueChangeFromOtherScope(): void
     {
         $this->object->set('value', 'the-value');
-        static::assertSame('the-value', $this->object->get('value'));
+        $this->assertSame('the-value', $this->object->get('value'));
 
         self::$entityManager
             ->createQueryBuilder()
@@ -115,14 +115,14 @@ class DoctrineConfigurationRegistryTest extends TestCase
             )
         ;
 
-        static::assertSame('new-value', $this->object->get('value'));
+        $this->assertSame('new-value', $this->object->get('value'));
     }
 
     #[Depends('testGetSet')]
     public function testGetValueInvalidState(): void
     {
         $this->object->set('value', 'the-value');
-        static::assertSame('the-value', $this->object->get('value'));
+        $this->assertSame('the-value', $this->object->get('value'));
 
         self::$entityManager
             ->createQueryBuilder()
@@ -137,14 +137,14 @@ class DoctrineConfigurationRegistryTest extends TestCase
 
         self::$entityManager->clear();
 
-        static::assertSame('new-value', $this->object->get('value'));
+        $this->assertSame('new-value', $this->object->get('value'));
     }
 
     #[DataProvider('provideSetGetKeepTypeCases')]
     public function testSetGetKeepType(mixed $value): void
     {
         $this->object->set('value', $value);
-        static::assertSame($value, $this->object->get('value'));
+        $this->assertSame($value, $this->object->get('value'));
     }
 
     public static function provideSetGetKeepTypeCases(): iterable

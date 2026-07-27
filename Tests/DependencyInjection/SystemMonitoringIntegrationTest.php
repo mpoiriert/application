@@ -38,8 +38,7 @@ class SystemMonitoringIntegrationTest extends IntegrationTestCase
     {
         return [
             'enabled' => true,
-            'service_status_providers' => [
-            ],
+            'service_status_providers' => [],
         ];
     }
 
@@ -100,13 +99,11 @@ class SystemMonitoringIntegrationTest extends IntegrationTestCase
             [
                 new ServiceConfiguration(
                     'draw.system_monitoring.monitored_service.doctrine_connection',
-                    [
-                    ]
+                    []
                 ),
                 new ServiceConfiguration(
                     'draw.system_monitoring.monitored_service.messenger',
-                    [
-                    ],
+                    [],
                 ),
                 new ServiceConfiguration(
                     'draw.system_monitoring.action.ping_action',
