@@ -4,23 +4,27 @@ namespace Draw\Component\Application\SystemMonitoring\Command;
 
 use Draw\Component\Application\SystemMonitoring\Status;
 use Draw\Component\Application\SystemMonitoring\System;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'draw:system-monitoring:statuses',
+    description: 'Validate current system statuses.',
+)]
 class SystemStatusesCommand extends Command
 {
     public function __construct(private System $system)
     {
-        parent::__construct('draw:system-monitoring:statuses');
+        parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setDescription('Validate current system statuses.')
             ->addArgument(
                 'context',
                 InputArgument::OPTIONAL,

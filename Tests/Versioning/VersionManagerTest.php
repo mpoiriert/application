@@ -7,6 +7,7 @@ use Draw\Component\Application\Versioning\VersionManager;
 use Draw\Component\Core\Reflection\ReflectionAccessor;
 use Draw\Contracts\Application\ConfigurationRegistryInterface;
 use Draw\Contracts\Application\VersionVerificationInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -16,6 +17,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * @internal
  */
 #[CoversClass(VersionManager::class)]
+#[AllowMockObjectsWithoutExpectations]
 class VersionManagerTest extends TestCase
 {
     private VersionManager $service;

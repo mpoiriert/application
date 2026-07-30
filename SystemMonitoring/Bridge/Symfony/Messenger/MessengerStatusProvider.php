@@ -6,7 +6,7 @@ use Draw\Component\Application\SystemMonitoring\ServiceStatus;
 use Draw\Component\Application\SystemMonitoring\ServiceStatusProviderInterface;
 use Draw\Component\Application\SystemMonitoring\Status;
 use Draw\Contracts\Messenger\TransportRepositoryInterface;
-use Symfony\Component\Messenger\Transport\InMemoryTransport;
+use Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport;
 use Symfony\Component\Messenger\Transport\Receiver\MessageCountAwareInterface;
 use Symfony\Component\Messenger\Transport\Sync\SyncTransport;
 

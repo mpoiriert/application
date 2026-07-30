@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class VersionManager implements VersionVerificationInterface
 {
-    final public const CONFIG = 'draw-application-deployed-version';
+    final public const string CONFIG = 'draw-application-deployed-version';
 
     private ?string $runningVersion = null;
 

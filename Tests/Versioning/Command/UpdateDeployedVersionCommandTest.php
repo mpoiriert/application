@@ -6,6 +6,7 @@ use Draw\Component\Application\Versioning\Command\UpdateDeployedVersionCommand;
 use Draw\Component\Application\Versioning\VersionManager;
 use Draw\Component\Tester\Application\CommandDataTester;
 use Draw\Component\Tester\Application\CommandTestTrait;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -14,6 +15,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  */
 #[CoversClass(UpdateDeployedVersionCommand::class)]
+#[AllowMockObjectsWithoutExpectations]
 class UpdateDeployedVersionCommandTest extends TestCase
 {
     use CommandTestTrait;
